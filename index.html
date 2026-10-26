@@ -1,0 +1,3830 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>40 Days Calculation SpeedX – Govt Exam Edition</title>
+
+<style>
+/* =====================================================
+   ULTIMA ACADEMY | PART 1
+   UI + STRUCTURE + CORE ENGINE START
+===================================================== */
+
+:root{
+--bg:#05070d;
+--bg2:#0b1020;
+--card:rgba(255,255,255,.08);
+--line:rgba(255,255,255,.12);
+--txt:#ffffff;
+--muted:#9fb3d9;
+--blue:#00d9ff;
+--purple:#8b5cf6;
+--green:#22c55e;
+--red:#ef4444;
+--yellow:#f59e0b;
+--shadow:0 10px 30px rgba(0,0,0,.35);
+}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,Helvetica,sans-serif;
+}
+
+body{
+visibility:hidden;
+background:
+radial-gradient(circle at top left,#12203f 0%,transparent 35%),
+radial-gradient(circle at bottom right,#26124a 0%,transparent 30%),
+linear-gradient(135deg,var(--bg),var(--bg2));
+color:var(--txt);
+min-height:100vh;
+overflow-x:hidden;
+}
+
+a{color:inherit;text-decoration:none}
+
+.container{
+max-width:1100px;
+margin:auto;
+padding:14px;
+}
+
+/* HEADER */
+header{
+position:sticky;
+top:0;
+z-index:50;
+backdrop-filter:blur(12px);
+background:rgba(5,7,13,.7);
+border-bottom:1px solid var(--line);
+}
+
+.topbar{
+display:flex;
+gap:12px;
+align-items:center;
+justify-content:space-between;
+flex-wrap:wrap;
+padding:12px 0;
+}
+
+.brand h1{
+font-size:36px;
+line-height:1.05;
+font-weight:900;
+letter-spacing:1.4px;
+background:linear-gradient(90deg,#00d9ff,#ffffff,#8b5cf6);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+text-shadow:0 0 12px rgba(0,217,255,.18);
+}
+@media(max-width:700px){
+.brand h1{
+font-size:30px;
+}
+}
+background:linear-gradient(90deg,var(--blue),#fff,var(--purple));
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+}
+
+.brand small{
+display:block;
+margin-top:6px;
+font-size:15px;
+font-weight:800;
+letter-spacing:1px;
+background:linear-gradient(90deg,#ffffff,#00d9ff,#8b5cf6);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+text-transform:uppercase;
+}
+
+.stats{
+display:flex;
+gap:10px;
+flex-wrap:wrap;
+}
+
+.pill{
+padding:10px 14px;
+border:1px solid var(--line);
+background:var(--card);
+border-radius:14px;
+font-size:14px;
+box-shadow:var(--shadow);
+}
+
+/* CARDS */
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:14px;
+margin-top:18px;
+}
+
+.card{
+background:var(--card);
+border:1px solid var(--line);
+border-radius:20px;
+padding:18px;
+box-shadow:var(--shadow);
+backdrop-filter:blur(10px);
+transition:.25s ease;
+}
+
+.card:hover{
+transform:translateY(-4px);
+border-color:rgba(0,217,255,.35);
+}
+
+.title{
+font-size:18px;
+font-weight:800;
+margin-bottom:10px;
+}
+
+.sub{
+color:var(--muted);
+font-size:14px;
+line-height:1.5;
+}
+
+/* BUTTONS */
+.btn{
+border:none;
+cursor:pointer;
+padding:12px 16px;
+border-radius:14px;
+font-weight:700;
+transition:.2s;
+color:#fff;
+background:linear-gradient(90deg,var(--blue),var(--purple));
+width:100%;
+margin-top:10px;
+}
+
+.btn:hover{
+transform:scale(1.03);
+}
+
+.btn.secondary{
+background:rgba(255,255,255,.06);
+border:1px solid var(--line);
+}
+
+.btn.green{
+background:linear-gradient(90deg,#16a34a,#22c55e);
+}
+
+/* PROGRESS */
+.progress{
+height:12px;
+background:rgba(255,255,255,.06);
+border-radius:30px;
+overflow:hidden;
+margin-top:10px;
+}
+
+.bar{
+height:100%;
+width:0%;
+background:linear-gradient(90deg,var(--blue),var(--purple));
+transition:.4s;
+}
+
+/* SCREEN SYSTEM */
+.screen{display:none}
+.screen.active{display:block}
+
+/* DAY LIST */
+.days{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(85px,1fr));
+gap:10px;
+margin-top:15px;
+}
+
+.day{
+padding:14px 10px;
+text-align:center;
+border-radius:16px;
+background:rgba(255,255,255,.05);
+border:1px solid var(--line);
+font-weight:800;
+cursor:pointer;
+transition:.2s;
+}
+
+.day:hover{transform:translateY(-3px)}
+.day.locked{opacity:.45;cursor:not-allowed}
+.day.done{border-color:#22c55e;color:#22c55e}
+.day.current{border-color:var(--blue);color:var(--blue)}
+
+/* PRACTICE */
+.qbox{
+font-size:34px;
+font-weight:900;
+text-align:center;
+margin:25px 0;
+letter-spacing:1px;
+}
+
+.input{
+width:100%;
+padding:14px;
+font-size:18px;
+border-radius:14px;
+border:1px solid var(--line);
+background:rgba(255,255,255,.06);
+color:#fff;
+outline:none;
+}
+
+.row{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:10px;
+margin-top:10px;
+}
+
+.timer{
+font-size:22px;
+font-weight:900;
+color:var(--yellow);
+text-align:center;
+margin-top:8px;
+}
+
+.feedback{
+text-align:center;
+font-weight:800;
+margin-top:14px;
+min-height:22px;
+}
+
+.correct{color:var(--green)}
+.wrong{color:var(--red)}
+
+/* RESULT */
+.big{
+font-size:38px;
+font-weight:900;
+margin-bottom:8px;
+}
+
+/* MOBILE */
+@media(max-width:700px){
+. h1{font-size:22px}
+.qbox{font-size:28px}
+.row{grid-template-columns:1fr}
+}
+
+/* ULTIMA ACADEMY black + gold brand refresh */
+:root{--bg:#050505;--bg2:#11100c;--card:rgba(255,255,255,.055);--line:rgba(244,190,45,.28);--txt:#fffdf5;--muted:#d0c8b4;--blue:#f4bd2d;--purple:#b88618;--green:#38c878;--red:#ff5555;--yellow:#ffd45c;--shadow:0 12px 32px rgba(0,0,0,.48)}
+body{background:radial-gradient(circle at top left,rgba(244,189,45,.13),transparent 34%),radial-gradient(circle at bottom right,rgba(184,134,24,.10),transparent 32%),linear-gradient(135deg,#030303,#17140c);}
+header{background:rgba(5,5,5,.88);border-bottom:1px solid rgba(244,189,45,.32)}
+.brand h1{background:linear-gradient(90deg,#ffe58b,#fff,#d99b0b);-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-shadow:0 0 12px rgba(244,189,45,.18)}
+.brand small{background:linear-gradient(90deg,#fff4cc,#f4bd2d);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.btn{background:linear-gradient(135deg,#ffe17a,#d99b0b);color:#171006;border:1px solid #ffdc66;font-weight:900;box-shadow:0 5px 18px rgba(244,189,45,.16)}
+.btn:hover{filter:brightness(1.08)}
+.btn.secondary{background:rgba(255,255,255,.06);color:#ffe7a0;border:1px solid rgba(244,189,45,.35);box-shadow:none}
+.card,.joinCard{border-color:rgba(244,189,45,.22)}
+.title{color:#ffe08a}
+.progress{background:rgba(255,255,255,.1)}
+.bar{background:linear-gradient(90deg,#d99b0b,#ffe58b)}
+.advBtn.active{background:linear-gradient(90deg,#f4bd2d,#ffe58b);color:#171006}
+.feedback{font-weight:900;min-height:28px;margin-top:12px;padding:8px 10px;border-radius:10px}
+.feedback.correct{background:rgba(56,200,120,.13);border:1px solid rgba(56,200,120,.45);color:#74f0a9}
+.feedback.wrong{background:rgba(255,85,85,.13);border:1px solid rgba(255,85,85,.45);color:#ff9292}
+#advOverlay .box{background:#11100c!important;border:1px solid rgba(244,189,45,.35);color:#fffdf5}
+#soundToggle{cursor:pointer;user-select:none;color:#ffe08a;font-weight:800}
+#soundToggle:hover{border-color:rgba(244,189,45,.7)}
+.reviewPanel{margin-top:12px;text-align:left;max-height:55vh;overflow:auto;padding-right:2px}
+.reviewHead{font-weight:900;color:#ffe08a;margin:4px 0 8px}
+.reviewItem{padding:12px 14px;margin-top:8px;border-radius:14px;background:rgba(255,255,255,.05);border:1px solid rgba(244,189,45,.22);border-left:4px solid #ff5555}
+.reviewItem.skipped,.reviewItem.timeout{border-left-color:#ffd45c}
+.reviewMeta{font-size:12px;color:#d0c8b4;margin-bottom:4px}
+.reviewQ{font-size:22px;font-weight:900;color:#fffdf5}
+.reviewYour{margin-top:6px;font-weight:800;color:#ff9a9a}
+.reviewRight{margin-top:2px;font-weight:800;color:#74f0a9}
+
+/* ---- compact header: stats in one line, reward button top-right ---- */
+body{padding-bottom:84px}
+header .topbar{display:flex;flex-direction:row;flex-wrap:wrap;align-items:center;gap:8px;padding:6px 12px}
+.brand{order:1;flex:1 1 auto;min-width:0}
+.brand h1{font-size:24px;line-height:1}
+.brand small{font-size:10px;margin-top:2px;letter-spacing:.8px}
+.stats{order:2;display:flex;flex-wrap:nowrap;gap:6px;align-items:center}
+.pill{padding:5px 10px;font-size:13px;border-radius:12px;box-shadow:none;white-space:nowrap}
+@media(max-width:700px){
+  .brand h1{font-size:20px}
+  .stats{order:4;flex:1 1 100%;gap:5px}
+  .stats .pill{flex:1 1 auto;text-align:center;padding:5px 6px;font-size:12px}
+  .pill .lbl{display:none}
+}
+
+/* ---- growth tracker ---- */
+.gTabs{display:flex;gap:8px;margin:6px 0 12px}
+.gTab{flex:1;padding:10px;border-radius:12px;border:1px solid rgba(244,189,45,.3);background:rgba(255,255,255,.05);color:#ffe7a0;font-weight:800;cursor:pointer}
+.gTab.active{background:linear-gradient(135deg,#ffe17a,#d99b0b);color:#171006;border-color:#ffdc66}
+.gNav{display:flex;align-items:center;justify-content:space-between;margin:4px 0 10px}
+.gNav b{color:#ffe08a;font-size:17px}
+.gNavBtn{width:42px;height:36px;border-radius:10px;border:1px solid rgba(244,189,45,.3);background:rgba(255,255,255,.06);color:#ffe7a0;font-size:16px;cursor:pointer}
+.gNavBtn:disabled{opacity:.3;cursor:default}
+.gChips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+.gChip{padding:6px 10px;border-radius:999px;background:rgba(255,255,255,.06);border:1px solid rgba(244,189,45,.22);font-size:12px;font-weight:700;color:#fffdf5}
+.gChip.g{color:#74f0a9}.gChip.r{color:#ff9a9a}.gChip.y{color:#ffe08a}
+.gLegend{display:flex;gap:12px;font-size:11px;font-weight:800;margin-bottom:8px;color:#d0c8b4;flex-wrap:wrap}
+.gLegend .t{color:#ffe08a}.gLegend .c{color:#74f0a9}.gLegend .w{color:#ff9a9a}
+.gcGrid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px}
+.gcHead{text-align:center;font-size:11px;color:#d0c8b4;font-weight:800;padding:4px 0}
+.gcDay{min-height:66px;border-radius:10px;padding:4px 1px;text-align:center;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);font-size:11px;line-height:1.25;display:flex;flex-direction:column;align-items:center}
+.gcDay.empty{background:none;border-color:transparent}
+.gcDay.has{cursor:pointer}
+.gcDay.today{border-color:#ffd45c}
+.gcDay.sel{outline:2px solid #ffe58b;outline-offset:-1px}
+.gcN{font-size:11px;font-weight:900;color:#fffdf5;margin-bottom:2px}
+.gcT{color:#ffe08a;font-weight:800}.gcC{color:#74f0a9;font-weight:800}.gcW{color:#ff9a9a;font-weight:800}
+.gDetail{margin-top:12px;padding:12px;border-radius:14px;background:rgba(255,255,255,.05);border:1px solid rgba(244,189,45,.25)}
+.gDetail h4{color:#ffe08a;margin-bottom:8px}
+.gStat3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;text-align:center}
+.gStat3 div{padding:8px 4px;border-radius:12px;background:rgba(255,255,255,.05);font-size:12px;color:#d0c8b4}
+.gStat3 b{display:block;font-size:20px;margin-top:2px}
+.gStat3 .t b{color:#ffe08a}.gStat3 .c b{color:#74f0a9}.gStat3 .w b{color:#ff9a9a}
+.gMuted{color:#d0c8b4;font-size:13px;margin-top:8px}
+.gSeg{display:flex;gap:6px;margin-bottom:10px}
+.gSeg button{flex:1;padding:8px;border-radius:10px;border:1px solid rgba(244,189,45,.3);background:rgba(255,255,255,.05);color:#ffe7a0;font-weight:800;font-size:13px;cursor:pointer}
+.gSeg button.active{background:rgba(244,189,45,.25);border-color:#ffdc66;color:#fff}
+.gSvg{width:100%;height:auto;display:block;margin-top:6px}
+.gReadout{margin-top:8px;padding:10px 12px;border-radius:12px;background:rgba(255,255,255,.05);border:1px solid rgba(244,189,45,.2);font-size:13px;color:#fffdf5}
+
+/* ---- leaderboard + sign-in ---- */
+.lbRow{display:flex;align-items:center;gap:10px;padding:10px 12px;margin-top:6px;border-radius:12px;background:rgba(255,255,255,.05);border:1px solid rgba(244,189,45,.18)}
+.lbRow.me{background:rgba(244,189,45,.16);border-color:#ffdc66}
+.lbRank{width:34px;text-align:center;font-weight:900;font-size:17px;color:#ffe08a}
+.lbMid{flex:1;min-width:0}
+.lbName{font-weight:800;color:#fffdf5;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lbSub{font-size:11px;color:#d0c8b4}
+.lbXp{font-weight:900;color:#ffe08a;white-space:nowrap}
+.lbHead{color:#d0c8b4;font-size:13px;margin-bottom:6px}
+.lbNote{margin-top:10px;font-size:12px;color:#d0c8b4;text-align:center}
+#authGate{position:fixed;inset:0;z-index:20500;display:flex;align-items:center;justify-content:center;padding:20px;background:radial-gradient(circle at 20% 20%,rgba(244,189,45,.15),transparent 35%),radial-gradient(circle at 80% 80%,rgba(184,134,24,.14),transparent 35%),linear-gradient(135deg,#030303,#0a0904,#17140c)}
+#authGate .agBox{width:min(92%,380px);text-align:center;padding:26px 22px;border-radius:24px;border:1px solid rgba(244,189,45,.35);background:rgba(17,16,12,.94);box-shadow:0 12px 40px rgba(0,0,0,.6)}
+#authGate h2{color:#ffe08a;margin-bottom:8px;letter-spacing:1px}
+#authGate p{color:#d0c8b4;font-size:14px;line-height:1.5}
+.agGoogle{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;margin-top:18px;padding:13px;border:none;border-radius:14px;background:#fff;color:#222;font-weight:800;font-size:15px;cursor:pointer}
+.agGoogle b{color:#4285f4;font-size:18px}
+.agGuest{width:100%;margin-top:10px;padding:12px;border-radius:14px;border:1px solid rgba(244,189,45,.35);background:rgba(255,255,255,.05);color:#ffe7a0;font-weight:700;cursor:pointer}
+.agMsg{margin-top:12px;min-height:18px;font-size:13px;color:#ff9a9a}
+.uaInput{width:100%;padding:12px;margin-top:8px;border-radius:12px;border:1px solid rgba(244,189,45,.3);background:rgba(255,255,255,.06);color:#fff;outline:none;font-size:15px}
+.uaSect{margin-top:16px;padding-top:14px;border-top:1px solid rgba(244,189,45,.25)}
+
+.gEmpty{padding:18px;text-align:center;color:#d0c8b4;border:1px dashed rgba(244,189,45,.3);border-radius:14px}
+
+.reviewPerfect{padding:14px;border-radius:14px;background:rgba(56,200,120,.12);border:1px solid rgba(56,200,120,.4);color:#74f0a9;font-weight:800;text-align:center}
+
+</style>
+</head>
+<body>
+
+<header>
+<div class="container topbar">
+
+<div class="brand">
+<h1 title="Join Telegram">ULTIMA ACADEMY</h1>
+<small>by PALASH BISWAS</small>
+</div>
+
+<div class="stats">
+<div class="pill" title="StreaX">🔥 <span class="lbl">StreaX: </span><span id="StreaX">0</span></div>
+<div class="pill" title="XP">⭐ <span class="lbl">XP: </span><span id="xp">0</span></div>
+<div class="pill" title="Rank">🏆 <span class="lbl">Rank: </span><span id="rank">Beginner</span></div>
+<div class="pill" id="soundToggle" title="Turn sound on/off">🔊</div>
+</div>
+
+</div>
+</header>
+
+<div class="container">
+
+<!-- DASHBOARD -->
+<section id="dashboard" class="screen active">
+
+<div class="grid">
+
+<div class="card">
+<div class="title">40 Days Calculation SpeedX</div>
+<div class="sub">
+Govt Exam speed maths game for SSC, Banking, Railway.
+Daily unlock challenge with addictive progress system.
+</div>
+
+<div class="progress">
+<div class="bar" id="mainBar"></div>
+</div>
+
+<button class="btn" onclick="showScreen('daysScreen')">
+Start Challenge
+</button>
+</div>
+
+<div class="card">
+<div class="title">Practice Modes</div>
+<div class="sub">
+Addition, Subtraction, Multiplication, Percentage & Mixed Sets.
+</div>
+
+<button class="btn" onclick="startQuickPractice()">
+Quick Practice
+</button>
+</div>
+
+<div class="card">
+<div class="title">📈 Growth Tracker</div>
+<div class="sub">
+Track questions attempted, correct &amp; incorrect every day, and watch your speed and accuracy grow.
+</div>
+<div class="row">
+<button class="btn" onclick="openGrowth('calendar')">📅 Growth Calendar</button>
+<button class="btn" onclick="openGrowth('graph')">📈 Graph</button>
+</div>
+</div>
+
+<div class="card">
+<div class="title">🏆 Leaderboard</div>
+<div class="sub">Compete with all students. Weekly and all-time XP rankings.</div>
+<div class="sub" id="cloudStatus" style="margin-top:8px"></div>
+<div class="row">
+<button class="btn" onclick="UACloud.openBoard('week')">🏆 This Week</button>
+<button class="btn" onclick="UACloud.openBoard('all')">🌟 All Time</button>
+</div>
+<button class="btn secondary" onclick="UACloud.openAccount()">☁️ Account &amp; Cloud Save</button>
+</div>
+
+</div>
+
+</section>
+
+<!-- DAY SCREEN -->
+<section id="daysScreen" class="screen">
+
+<div class="card">
+<div class="title">Select Day</div>
+<div class="sub">
+Complete each day to unlock next challenge.
+</div>
+
+<div class="days" id="daysWrap"></div>
+
+<button class="btn secondary" onclick="showScreen('dashboard')">
+Back
+</button>
+</div>
+
+</section>
+
+<!-- PRACTICE SCREEN -->
+<section id="practiceScreen" class="screen">
+
+<div class="card">
+<div class="title" id="practiceTitle">Day 1 Practice</div>
+
+<div class="timer">⏱ Time: <span id="time">20</span>s</div>
+
+<div class="qbox" id="questionBox">12 + 18</div>
+
+<input type="number" id="answerInput" class="input" placeholder="Enter Answer">
+
+<div class="row">
+<button class="btn" onclick="checkAnswer()">Submit</button>
+<button class="btn secondary" onclick="skipQuestion()">Skip</button>
+</div>
+
+<div class="feedback" id="feedback"></div>
+
+</div>
+
+</section>
+
+<!-- RESULT -->
+<section id="resultScreen" class="screen">
+
+<div class="card">
+<div class="big">Day Complete 🎉</div>
+
+<div class="sub">
+Score: <span id="scoreText">0</span><br>
+Accuracy: <span id="accText">0%</span><br>
+XP Earned: <span id="xpEarned">0</span>
+</div>
+
+<button class="btn secondary" id="reviewBtn" onclick="toggleReview()">📝 Review Wrong Answers</button>
+<div id="reviewPanel" class="reviewPanel" style="display:none"></div>
+
+<button class="btn" onclick="showScreen('daysScreen')">
+Next Challenge
+</button>
+
+<button class="btn secondary" onclick="showScreen('dashboard')">
+Dashboard
+</button>
+
+</div>
+
+</section>
+
+<!-- GROWTH SCREEN -->
+<section id="growthScreen" class="screen">
+<div class="card">
+<div class="title">📈 Growth Tracker</div>
+<div class="gTabs">
+<button class="gTab active" id="gTabCal" onclick="setGrowthTab('calendar')">📅 Calendar</button>
+<button class="gTab" id="gTabGraph" onclick="setGrowthTab('graph')">📈 Graph</button>
+</div>
+<div id="growthBody"></div>
+<button class="btn secondary" onclick="showScreen('dashboard')">Back</button>
+</div>
+</section>
+
+<!-- LEADERBOARD SCREEN -->
+<section id="boardScreen" class="screen">
+<div class="card">
+<div class="title">🏆 Leaderboard</div>
+<div class="gTabs">
+<button class="gTab active" id="lbTabWeek" onclick="UACloud.openBoard('week')">This Week</button>
+<button class="gTab" id="lbTabAll" onclick="UACloud.openBoard('all')">All Time</button>
+</div>
+<div id="boardBody"></div>
+<div class="row">
+<button class="btn secondary" onclick="UACloud.refreshBoard()">🔄 Refresh</button>
+<button class="btn secondary" onclick="showScreen('dashboard')">Back</button>
+</div>
+</div>
+</section>
+
+</div>
+
+<script>
+/* =====================================================
+   CORE DATA
+===================================================== */
+
+
+/* =====================================================
+   ULTIMA SOUND ENGINE (shared by every mode)
+===================================================== */
+const UASound=(function(){
+  let ctx=null, master=null, on=true, flip=false;
+  try{ on = localStorage.getItem("uaSoundOn")!=="0"; }catch(e){}
+
+  function ensure(){
+    try{
+      const C=window.AudioContext||window.webkitAudioContext;
+      if(!C) return null;
+      if(!ctx){ ctx=new C(); master=ctx.createGain(); master.gain.value=1; master.connect(ctx.destination); }
+      if(ctx.state==="suspended") ctx.resume();
+      return ctx;
+    }catch(e){ return null; }
+  }
+  function live(){
+    const s=document.getElementById("practiceScreen");
+    return !!(s && s.classList.contains("active"));
+  }
+  function tone(o){
+    const c=ensure(); if(!c||!on) return;
+    try{
+      const t0=c.currentTime+(o.at||0), d=o.dur||.2, v=o.vol||.15;
+      const osc=c.createOscillator(), g=c.createGain();
+      osc.type=o.type||"sine";
+      osc.frequency.setValueAtTime(o.f,t0);
+      if(o.to) osc.frequency.exponentialRampToValueAtTime(o.to,t0+(o.slide||d));
+      g.gain.setValueAtTime(.0001,t0);
+      g.gain.exponentialRampToValueAtTime(v,t0+(o.atk||.012));
+      if(o.hold) g.gain.setValueAtTime(v,t0+d-(o.rel||.15));
+      g.gain.exponentialRampToValueAtTime(.0001,t0+d);
+      if(o.lp){
+        const f=c.createBiquadFilter(); f.type="lowpass"; f.frequency.value=o.lp;
+        osc.connect(f); f.connect(g);
+      }else{ osc.connect(g); }
+      g.connect(master);
+      osc.start(t0); osc.stop(t0+d+.03);
+    }catch(e){}
+  }
+  function click(freq,vol){
+    const c=ensure(); if(!c||!on) return;
+    try{
+      const len=Math.floor(c.sampleRate*.03);
+      const buf=c.createBuffer(1,len,c.sampleRate), data=buf.getChannelData(0);
+      for(let i=0;i<len;i++) data[i]=(Math.random()*2-1)*Math.pow(1-i/len,3);
+      const src=c.createBufferSource(); src.buffer=buf;
+      const bp=c.createBiquadFilter(); bp.type="bandpass"; bp.frequency.value=freq; bp.Q.value=5;
+      const g=c.createGain(); g.gain.value=vol;
+      src.connect(bp); bp.connect(g); g.connect(master);
+      src.start(c.currentTime);
+    }catch(e){}
+  }
+  function refreshBtn(){
+    const b=document.getElementById("soundToggle");
+    if(b) b.textContent = on ? "🔊" : "🔇";
+  }
+
+  return {
+    unlock:ensure,
+    isOn:function(){ return on; },
+    toggle:function(){
+      on=!on;
+      try{ localStorage.setItem("uaSoundOn",on?"1":"0"); }catch(e){}
+      refreshBtn();
+      if(on){ ensure(); this.tap(); }
+    },
+    bindToggle:function(){
+      refreshBtn();
+      const b=document.getElementById("soundToggle");
+      if(b) b.onclick=()=>UASound.toggle();
+      ["pointerdown","touchstart","keydown"].forEach(ev=>
+        document.addEventListener(ev,function(){ ensure(); },{passive:true}));
+      document.addEventListener("click",function(e){
+        const b=e.target.closest && e.target.closest("button");
+        if(!b || b.closest("#practiceScreen") || b.classList.contains("enterBtn")) return;
+        UASound.tap();
+      });
+    },
+
+    /* motivating correct-answer jingle: rising major arpeggio + sparkle */
+    correct:function(){
+      [523.25,659.25,783.99,1046.5].forEach((f,i)=>{
+        tone({f:f,at:i*.08,dur:.30,type:"triangle",vol:.16});
+        tone({f:f*2,at:i*.08,dur:.22,type:"sine",vol:.05});
+      });
+      tone({f:1567.98,at:.34,dur:.50,type:"sine",vol:.09});
+      tone({f:2093,at:.38,dur:.42,type:"sine",vol:.04});
+    },
+    wrong:function(){
+      tone({f:260,to:200,dur:.18,type:"triangle",vol:.15});
+      tone({f:190,to:140,at:.14,dur:.30,type:"triangle",vol:.15});
+    },
+    skip:function(){ tone({f:700,to:350,dur:.14,type:"sine",vol:.08}); },
+    timeUp:function(){
+      if(!live()) return;
+      tone({f:180,to:120,dur:.45,type:"sawtooth",vol:.09,lp:900});
+    },
+    /* start horn */
+    horn:function(){
+      [155.56,311.13,392,466.16].forEach(f=>{
+        tone({f:f*1.06,to:f,slide:.14,dur:.95,type:"sawtooth",vol:.065,atk:.04,hold:true,rel:.3,lp:2200});
+      });
+    },
+    /* stopwatch tick-tock (every second) */
+    tick:function(urgent){
+      if(!live()) return;
+      flip=!flip;
+      click(flip?3000:2200, urgent?1.1:.65);
+      tone({f:flip?1000:760,dur:.05,type:"sine",vol:urgent?.08:.045});
+    },
+    finish:function(acc){
+      if(acc>=80){
+        [523.25,659.25,783.99,1046.5,1318.5].forEach((f,i)=>tone({f:f,at:i*.10,dur:.3,type:"triangle",vol:.15}));
+        [523.25,659.25,783.99,1046.5].forEach(f=>tone({f:f,at:.55,dur:.9,type:"triangle",vol:.09,hold:true,rel:.5}));
+      }else if(acc>=50){
+        [523.25,659.25,783.99].forEach((f,i)=>tone({f:f,at:i*.12,dur:.35,type:"triangle",vol:.13}));
+      }else{
+        [440,523.25].forEach((f,i)=>tone({f:f,at:i*.15,dur:.35,type:"triangle",vol:.12}));
+      }
+    },
+    enter:function(){
+      tone({f:659.25,dur:.25,type:"triangle",vol:.13});
+      tone({f:987.77,at:.10,dur:.40,type:"triangle",vol:.13});
+    },
+    tap:function(){ tone({f:880,dur:.05,type:"sine",vol:.04}); }
+  };
+})();
+
+const app = {
+day:1,
+unlock:1,
+xp:0,
+StreaX:0,
+doneDays:[],
+questions:[],
+index:0,
+score:0,
+wrong:0,
+timer:null,
+timeLeft:20,
+mode:"day",
+log:[]
+};
+
+function safeLoad(){
+try{
+const data = JSON.parse(localStorage.getItem("calcRushData")) || {};
+app.unlock = data.unlock || 1;
+app.xp = data.xp || 0;
+app.StreaX = data.StreaX || 0;
+app.doneDays = data.doneDays || [];
+}catch(e){}
+}
+
+function safeSave(){
+try{
+localStorage.setItem("calcRushData",JSON.stringify({
+unlock:app.unlock,
+xp:app.xp,
+StreaX:app.StreaX,
+doneDays:app.doneDays
+}));
+}catch(e){}
+}
+
+function rankName(xp){
+if(xp>=1500) return "Master";
+if(xp>=600) return "Warrior";
+return "Beginner";
+}
+
+function updateHeader(){
+document.getElementById("xp").textContent = app.xp;
+document.getElementById("StreaX").textContent = app.StreaX;
+document.getElementById("rank").textContent = rankName(app.xp);
+
+let percent = ((app.unlock-1)/40)*100;
+document.getElementById("mainBar").style.width = percent+"%";
+}
+
+function showScreen(id){
+document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));
+document.getElementById(id).classList.add("active");
+if(id==="daysScreen") renderDays();
+if(id==="growthScreen"){ try{ renderGrowth(); }catch(e){} }
+if(id==="resultScreen"){
+  try{ recordGrowth(); }catch(e){}
+  try{ if(window.UACloud) UACloud.scheduleSync(800); }catch(e){}
+  try{ renderReview(); }catch(e){}
+  try{ UASound.finish(parseInt(document.getElementById("accText").textContent)||0); }catch(e){}
+}
+}
+
+safeLoad();
+updateHeader();
+UASound.bindToggle();
+</script>
+<script>
+/* =====================================================
+   ULTIMA ACADEMY | PART 2
+   QUESTION ENGINE + GAME LOGIC + RESULTS
+   Paste this below Part 1 existing <script> content
+===================================================== */
+
+/* ---------- Utility ---------- */
+function rand(min, max){
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function clearTimer(){
+
+    if(app.timer){
+        clearInterval(app.timer);
+        app.timer = null;
+    }
+}
+function clearAdvancedTimer(){
+
+    if(window.advSessionTimer){
+        clearInterval(window.advSessionTimer);
+        window.advSessionTimer = null;
+    }
+}
+
+/* ---------- Day Grid ---------- */
+function renderDays(){
+  const wrap = document.getElementById("daysWrap");
+  if(!wrap) return;
+
+  wrap.innerHTML = "";
+
+  for(let i=1;i<=40;i++){
+    const box = document.createElement("div");
+    box.className = "day";
+
+    if(i > app.unlock){
+      box.classList.add("locked");
+      box.innerHTML = "🔒 Day " + i;
+    }else{
+      if(app.doneDays.includes(i)) box.classList.add("done");
+      if(i === app.unlock && !app.doneDays.includes(i)) box.classList.add("current");
+
+      box.innerHTML = "Day " + i;
+      box.onclick = ()=> startDay(i);
+    }
+
+    wrap.appendChild(box);
+  }
+}
+
+/* ---------- Question Generator ---------- */
+function makeQuestion(type){
+
+  let a,b,q,ans,topic;
+
+  switch(type){
+
+    case "add":
+      a = rand(10,999);
+      b = rand(10,999);
+      q = `${a} + ${b}`;
+      ans = a + b;
+      topic = "Addition";
+      break;
+
+    case "sub":
+      a = rand(100,999);
+      b = rand(10,a);
+      q = `${a} - ${b}`;
+      ans = a - b;
+      topic = "Subtraction";
+      break;
+
+    case "mul":
+      a = rand(11,99);
+      b = rand(2,19);
+      q = `${a} × ${b}`;
+      ans = a * b;
+      topic = "Multiplication";
+      break;
+
+    case "percent":
+      a = rand(10,500);
+      b = [5,10,15,20,25,30,40,50][rand(0,7)];
+      q = `${b}% of ${a}`;
+      ans = (a * b) / 100;
+      topic = "Percentage";
+      break;
+
+    case "square":
+      a = rand(11,40);
+      q = `${a}²`;
+      ans = a * a;
+      topic = "Squares";
+      break;
+
+    case "cube":
+      a = rand(2,15);
+      q = `${a}³`;
+      ans = a * a * a;
+      topic = "Cubes";
+      break;
+
+    default:
+      const types = ["add","sub","mul","percent","square","cube"];
+      return makeQuestion(types[rand(0,5)]);
+  }
+
+  return { q, ans, topic };
+}
+/* ---------- Build Day Set ---------- */
+function buildQuestions(dayNo){
+  const arr = [];
+  const total = 20; // multiple questions each day
+
+  for(let i=0;i<total;i++){
+
+    let type = "add";
+
+if(dayNo <= 10)
+ type = ["add","sub","mul"][rand(0,2)];
+
+else if(dayNo <= 20)
+ type = ["add","sub","mul","percent"][rand(0,3)];
+
+else if(dayNo <= 30)
+ type = ["mul","percent","square","cube","sub"][rand(0,4)];
+
+else
+ type = ["add","sub","mul","percent","square","cube"][rand(0,5)];
+
+    arr.push(makeQuestion(type));
+  }
+
+  return arr;
+}
+
+/* ---------- Start Modes ---------- */
+function startDay(dayNo){
+  app.mode = "day";
+  app.day = dayNo;
+  app.questions = buildQuestions(dayNo);
+  startSession("Day " + dayNo + " Challenge");
+}
+
+function startQuickPractice(){
+
+  app.mode = "quick";
+  app.day = 0;
+  app.questions = [];
+
+  for(let i=0;i<20;i++){
+    app.questions.push(makeQuestion("mix"));
+  }
+
+  startSession("Quick Practice");
+}
+
+/* ---------- Start Session ---------- */
+function startSession(title){
+  app.index = 0;
+  app.score = 0;
+  app.wrong = 0;
+
+  app.log = [];
+  app.recorded = false;
+  app.startedAt = Date.now();
+  UASound.horn();
+
+  const t = document.getElementById("practiceTitle");
+  if(t) t.textContent = title;
+
+  showScreen("practiceScreen");
+  nextQuestion();
+}
+
+/* ---------- Show Next Question ---------- */
+function nextQuestion(){
+
+    clearTimer();
+
+    if(!app.questions || app.questions.length===0){
+        console.log("No questions found");
+        return;
+    }
+
+    if(app.index >= app.questions.length){
+        finishSession();
+        return;
+    }
+
+    const obj = app.questions[app.index];
+
+    if(!obj){
+        console.log("Question undefined at index:", app.index);
+        return;
+    }
+
+    document.getElementById("questionBox").textContent = obj.q;
+
+    document.getElementById("feedback").textContent = "";
+    document.getElementById("feedback").className = "feedback";
+
+    const inp = document.getElementById("answerInput");
+    inp.value="";
+    inp.focus();
+
+    /* ADVANCED MODE */
+    if(app.mode==="advanced"){
+        document.getElementById("time").textContent = advSeconds;
+        return;
+    }
+
+    /* NORMAL MODES */
+    app.timeLeft = 20;
+    document.getElementById("time").textContent = app.timeLeft;
+
+    app.timer = setInterval(()=>{
+
+        app.timeLeft--;
+
+        document.getElementById("time").textContent = app.timeLeft;
+
+        if(app.timeLeft>0) UASound.tick(app.timeLeft<=5);
+
+        if(app.timeLeft<=0){
+
+            clearInterval(app.timer);
+
+            app.wrong++;
+
+            logMistake("timeout");
+            UASound.timeUp();
+            showMsg("Time Up ⏱",false);
+
+            setTimeout(()=>{
+                app.index++;
+                nextQuestion();
+            },600);
+        }
+
+    },1000);
+}
+
+/* ---------- Check Answer ---------- */
+function checkAnswer(){
+
+  const inp = document.getElementById("answerInput");
+  const val = inp.value.trim();
+
+  if(val===""){
+    showMsg("Enter Answer", false);
+    return;
+  }
+
+  const user = Number(val);
+  const real = Number(app.questions[app.index].ans);
+
+  if(app.mode !== "advanced"){
+    clearInterval(app.timer);
+  }
+
+  if(user===real){
+    app.score++;
+    UASound.correct();
+    showMsg("Correct ✅", true);
+  }else{
+    app.wrong++;
+    logMistake("wrong", val);
+    UASound.wrong();
+    showMsg(`Wrong ❌ Correct: ${real}`, false);
+  }
+
+  if(app.mode==="advanced"){
+    app.index++;
+    nextQuestion();
+    return;
+  }
+
+  setTimeout(()=>{
+    app.index++;
+    nextQuestion();
+  },700);
+}
+
+/* ---------- Skip ---------- */
+function skipQuestion(){
+
+  if(app.mode !== "advanced"){
+    clearInterval(app.timer);
+  }
+
+  app.wrong++;
+  logMistake("skipped");
+  UASound.skip();
+  showMsg("Skipped ⏭", false);
+
+  app.index++;
+
+  if(app.mode==="advanced"){
+    nextQuestion();
+    return;
+  }
+
+  setTimeout(nextQuestion,500);
+}
+
+/* ---------- Feedback ---------- */
+function showMsg(txt, good){
+  const fb = document.getElementById("feedback");
+  fb.textContent = txt;
+  fb.className = good ? "feedback correct" : "feedback wrong";
+}
+
+/* ---------- Mistake log + review ---------- */
+function logMistake(type, userVal){
+  try{
+    const i = app.index, o = app.questions[i];
+    if(!o) return;
+    if(!app.log) app.log = [];
+    if(app.log.some(x=>x.i===i)) return;
+    app.log.push({i:i, q:o.q, topic:o.topic||"", ans:o.ans, user:(userVal===undefined?"":String(userVal)), type:type});
+  }catch(e){}
+}
+
+function reviewFmt(n){
+  const x = Number(n);
+  return isNaN(x) ? String(n) : String(Math.round(x*1e6)/1e6);
+}
+function reviewEsc(s){
+  return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+}
+
+function renderReview(){
+  const btn = document.getElementById("reviewBtn");
+  const panel = document.getElementById("reviewPanel");
+  if(!btn || !panel) return;
+
+  const log = (app.log || []).slice().sort((a,b)=>a.i-b.i);
+  panel.style.display = "none";
+  btn.dataset.n = log.length;
+  btn.dataset.open = "0";
+  btn.textContent = "📝 Review Wrong Answers (" + log.length + ")";
+
+  if(log.length === 0){
+    panel.innerHTML = '<div class="reviewPerfect">No wrong answers in this test. Perfect round! 🏆</div>';
+    return;
+  }
+
+  let html = '<div class="reviewHead">Questions you missed (' + log.length + ')</div>';
+  log.forEach(x=>{
+    let yours;
+    if(x.type === "skipped") yours = "You skipped this question";
+    else if(x.type === "timeout") yours = "Time up – not answered";
+    else yours = "Your answer: " + reviewEsc(x.user) + " ❌";
+
+    html += '<div class="reviewItem ' + x.type + '">' +
+      '<div class="reviewMeta">Question ' + (x.i+1) + (x.topic ? ' · ' + reviewEsc(x.topic) : '') + '</div>' +
+      '<div class="reviewQ">' + reviewEsc(x.q) + ' = ?</div>' +
+      '<div class="reviewYour">' + yours + '</div>' +
+      '<div class="reviewRight">Correct answer: ' + reviewEsc(reviewFmt(x.ans)) + ' ✅</div>' +
+    '</div>';
+  });
+  panel.innerHTML = html;
+}
+
+function toggleReview(){
+  const btn = document.getElementById("reviewBtn");
+  const panel = document.getElementById("reviewPanel");
+  if(!btn || !panel) return;
+  const open = btn.dataset.open === "1";
+  panel.style.display = open ? "none" : "block";
+  btn.dataset.open = open ? "0" : "1";
+  btn.textContent = (open ? "📝 Review Wrong Answers (" : "🙈 Hide Wrong Answers (") + (btn.dataset.n||0) + ")";
+}
+
+/* ---------- Finish ---------- */
+function finishSession(){
+
+  clearTimer();
+
+  const total = app.questions.length;
+  const accuracy = Math.round((app.score/total)*100);
+  const xpGain = (app.score * 10) + (accuracy >= 80 ? 20 : 0);
+
+  app.xp += xpGain;
+
+  if(app.mode === "day"){
+    if(!app.doneDays.includes(app.day)){
+      app.doneDays.push(app.day);
+    }
+
+    if(app.day === app.unlock && app.unlock < 40){
+      app.unlock++;
+      app.StreaX++;
+    }
+  }
+
+  safeSave();
+  updateHeader();
+
+  document.getElementById("scoreText").textContent =
+    `${app.score} / ${total}`;
+
+  document.getElementById("accText").textContent =
+    accuracy + "%";
+
+  document.getElementById("xpEarned").textContent =
+    xpGain;
+
+  showScreen("resultScreen");
+}
+
+/* ---------- Enter Key ---------- */
+document.addEventListener("keydown", function(e){
+  if(e.key === "Enter"){
+    const active = document.getElementById("practiceScreen");
+    if(active && active.classList.contains("active")){
+      checkAnswer();
+    }
+  }
+});
+
+/* ---------- Boot ---------- */
+renderDays();
+updateHeader();
+
+/* =====================================================
+   HOW TO USE
+   1. Paste this after Part 1 script.
+   2. Save as single HTML file.
+   3. Open in Chrome.
+   4. Start Challenge.
+===================================================== */
+</script>
+<script>
+/* =====================================================
+   PART 8 — NEON INTRO EXPERIENCE
+   by PALASH BISWAS
+===================================================== */
+
+(function(){
+
+/* ===========================
+   STYLE
+=========================== */
+const style=document.createElement("style");
+style.innerHTML=`
+#introScreen{
+position:fixed;
+inset:0;
+background:
+radial-gradient(circle at 20% 20%,rgba(244,189,45,.15),transparent 35%),
+radial-gradient(circle at 80% 80%,rgba(184,134,24,.14),transparent 35%),
+linear-gradient(135deg,#030303,#0a0904,#17140c);
+z-index:20000;
+display:flex;
+align-items:center;
+justify-content:center;
+overflow:hidden;
+flex-direction:column;
+font-family:Arial,sans-serif;
+}
+
+.introParticle{
+position:absolute;
+color:rgba(244,189,45,.11);
+font-weight:900;
+pointer-events:none;
+animation:floatMath linear infinite;
+}
+
+@keyframes floatMath{
+0%{transform:translateY(100vh) rotate(0deg);opacity:0;}
+20%{opacity:1;}
+100%{transform:translateY(-120px) rotate(360deg);opacity:0;}
+}
+
+.introGlow{
+position:absolute;
+width:420px;
+height:420px;
+border-radius:50%;
+background:radial-gradient(circle,rgba(244,189,45,.18),transparent 70%);
+filter:blur(40px);
+animation:pulseGlow 3s infinite;
+}
+
+@keyframes pulseGlow{
+0%,100%{transform:scale(1);}
+50%{transform:scale(1.18);}
+}
+
+.introWrap{
+position:relative;
+z-index:2;
+text-align:center;
+padding:24px;
+max-width:92%;
+}
+
+.brandTop{
+font-size:14px;
+letter-spacing:3px;
+font-weight:800;
+color:#e9c25a;
+margin-bottom:8px;
+text-transform:uppercase;
+}
+
+.presents{
+font-size:12px;
+color:rgba(255,229,139,.5);
+margin-bottom:16px;
+}
+
+.mainTitle{
+font-size:clamp(38px,8vw,74px);
+font-weight:900;
+letter-spacing:2px;
+background:linear-gradient(90deg,#ffe58b,#ffffff,#d99b0b);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+animation:titleGlow 2s infinite alternate;
+}
+
+@keyframes titleGlow{
+from{filter:drop-shadow(0 0 8px rgba(244,189,45,.20));}
+to{filter:drop-shadow(0 0 22px rgba(244,189,45,.45));}
+}
+
+.subTitle{
+margin-top:10px;
+font-size:15px;
+font-weight:700;
+color:#fff4cc;
+}
+
+.examText{
+margin-top:18px;
+font-size:13px;
+letter-spacing:1px;
+color:#d0c8b4;
+min-height:20px;
+}
+
+.creator{
+margin-top:26px;
+font-size:14px;
+font-weight:800;
+background:linear-gradient(90deg,#ffe58b,#d99b0b);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+}
+
+.enterBtn{
+margin-top:34px;
+padding:16px 32px;
+border:1px solid #ffdc66;
+border-radius:18px;
+font-weight:900;
+font-size:15px;
+cursor:pointer;
+color:#171006;
+background:linear-gradient(135deg,#ffe17a,#d99b0b);
+box-shadow:0 0 30px rgba(244,189,45,.28);
+transition:.25s;
+}
+
+.enterBtn:hover{
+transform:scale(1.06);
+box-shadow:0 0 45px rgba(244,189,45,.5);
+}
+
+.fadeOut{
+animation:fadeOutIntro .9s forwards;
+}
+
+@keyframes fadeOutIntro{
+to{
+opacity:0;
+visibility:hidden;
+}
+}
+`;
+document.head.appendChild(style);
+
+/* ===========================
+   INTRO HTML
+=========================== */
+const intro=document.createElement("div");
+intro.id="introScreen";
+
+intro.innerHTML=`
+<div class="introGlow"></div>
+
+<div class="introWrap">
+
+<div class="brandTop">ULTIMA ACADEMY</div>
+<div class="presents">presents</div>
+
+<div class="mainTitle">Calculation SpeedX</div>
+
+<div class="subTitle">
+Govt Exam Speed Training Engine
+</div>
+
+<div class="examText" id="typingExam"></div>
+
+<div class="creator">
+Crafted by PALASH BISWAS
+</div>
+
+<button class="enterBtn" onclick="enterArena()">
+ENTER TRAINING ARENA
+</button>
+
+</div>
+`;
+
+document.body.appendChild(intro);
+document.body.style.opacity="0";
+document.body.style.visibility="visible";
+
+setTimeout(()=>{
+ document.body.style.transition="opacity .4s ease";
+ document.body.style.opacity="1";
+},50);
+
+/* ===========================
+   FLOATING SYMBOLS
+=========================== */
+const symbols=["+","−","×","÷","%","√","π","="];
+
+for(let i=0;i<26;i++){
+let s=document.createElement("div");
+s.className="introParticle";
+s.textContent=symbols[Math.floor(Math.random()*symbols.length)];
+s.style.left=Math.random()*100+"%";
+s.style.fontSize=(18+Math.random()*28)+"px";
+s.style.animationDuration=(5+Math.random()*6)+"s";
+s.style.animationDelay=Math.random()*4+"s";
+intro.appendChild(s);
+}
+
+/* ===========================
+   TYPING EFFECT
+=========================== */
+const text="SSC • BANKING • RAILWAY • DEFENCE • STATE EXAMS";
+let i=0;
+
+function typeExam(){
+if(i<text.length){
+document.getElementById("typingExam").textContent+=text.charAt(i);
+i++;
+setTimeout(typeExam,55);
+}
+}
+setTimeout(typeExam,500);
+
+/* ===========================
+   ENTER
+=========================== */
+window.enterArena=function(){
+UASound.unlock();
+UASound.enter();
+intro.classList.add("fadeOut");
+
+setTimeout(()=>{
+intro.remove();
+if(typeof showJoinPage==="function") showJoinPage();
+if(window.UACloud) UACloud.afterIntro();
+},900);
+};
+
+/* ===========================
+   AUTO FIRST LOAD
+=========================== */
+document.querySelectorAll(".screen").forEach(s=>{
+s.style.visibility="hidden";
+});
+
+setTimeout(()=>{
+document.querySelectorAll(".screen").forEach(s=>{
+s.style.visibility="visible";
+});
+},1000);
+
+})();
+</script>
+
+<script>
+/* =====================================================
+   PART 3 PRO MAX UPGRADE
+   Paste BELOW Part 2 (before </body>)
+   100% compatible with Part 1 + Part 2
+===================================================== */
+
+(function(){
+
+/* ---------- Safe Helpers ---------- */
+function byId(id){
+  return document.getElementById(id);
+}
+
+function safeParse(key, fallback){
+  try{
+    return JSON.parse(localStorage.getItem(key)) || fallback;
+  }catch(e){
+    return fallback;
+  }
+}
+
+/* ---------- Floating Motivational Toast ---------- */
+const toast = document.createElement("div");
+toast.id = "proToast";
+toast.style.cssText = `
+position:fixed;
+left:50%;
+bottom:18px;
+transform:translateX(-50%);
+padding:12px 18px;
+border-radius:14px;
+background:rgba(0,0,0,.78);
+color:#fff;
+font-weight:700;
+font-size:14px;
+z-index:9999;
+opacity:0;
+transition:.35s;
+pointer-events:none;
+border:1px solid rgba(255,255,255,.12);
+backdrop-filter:blur(8px);
+max-width:90%;
+text-align:center;
+`;
+document.body.appendChild(toast);
+
+function showToast(msg){
+  toast.textContent = msg;
+  toast.style.opacity = "1";
+
+  clearTimeout(window.toastTimer);
+  window.toastTimer = setTimeout(()=>{
+    toast.style.opacity = "0";
+  },1800);
+}
+
+/* ---------- Quotes ---------- */
+const quotes = [
+"Discipline beats motivation.",
+"Speed + Accuracy = Selection.",
+"Daily 1% better.",
+"You are improving!",
+"Consistency creates toppers.",
+"Try Faster!",
+"One more set. One step closer."
+];
+
+setInterval(()=>{
+  showToast(quotes[Math.floor(Math.random()*quotes.length)]);
+}, 25000);
+
+/* ---------- Confetti Win Effect ---------- */
+function confettiBurst(){
+  for(let i=0;i<28;i++){
+    const c = document.createElement("div");
+    c.style.cssText = `
+    position:fixed;
+    top:-10px;
+    left:${Math.random()*100}%;
+    width:${6+Math.random()*6}px;
+    height:${6+Math.random()*6}px;
+    border-radius:2px;
+    background:hsl(${Math.random()*360}deg 90% 60%);
+    z-index:9999;
+    pointer-events:none;
+    opacity:1;
+    transition:2.2s linear;
+    `;
+    document.body.appendChild(c);
+
+    setTimeout(()=>{
+      c.style.transform = `translateY(${window.innerHeight+40}px) rotate(${720*Math.random()}deg)`;
+      c.style.opacity = "0";
+    },30);
+
+    setTimeout(()=>c.remove(),2300);
+  }
+}
+
+/* ---------- Weak Topic Tracker ---------- */
+let weakTopics = safeParse("weakTopicsData", {});
+window.__uaWeak = weakTopics;
+
+function saveWeak(){
+  localStorage.setItem("weakTopicsData", JSON.stringify(weakTopics));
+}
+
+/* Hook existing checkAnswer */
+if(typeof checkAnswer === "function"){
+  const oldCheck = checkAnswer;
+
+  window.checkAnswer = function(){
+
+    try{
+      const idx = app.index;
+      const q = app.questions[idx];
+      const input = byId("answerInput");
+      const userVal = input ? input.value.trim() : "";
+
+      if(userVal !== "" && q){
+        const user = Number(userVal);
+        const real = Number(q.ans);
+
+        if(user !== real){
+          const key = q.topic || "Mixed";
+          weakTopics[key] = (weakTopics[key] || 0) + 1;
+          saveWeak();
+        }
+      }
+    }catch(e){}
+
+    oldCheck();
+  };
+}
+
+/* ---------- Hook finishSession ---------- */
+if(typeof finishSession === "function"){
+  const oldFinish = finishSession;
+
+  window.finishSession = function(){
+
+    oldFinish();
+
+    try{
+      const scoreNode = byId("scoreText");
+      let scoreTxt = scoreNode ? scoreNode.textContent : "";
+      let val = parseInt(scoreTxt);
+
+      if(!isNaN(val) && val >= 7){
+        confettiBurst();
+      }
+
+      injectAnalytics();
+      showToast("Session Saved Successfully ✅");
+
+    }catch(e){}
+  };
+}
+
+/* ---------- Analytics Card ---------- */
+function injectAnalytics(){
+
+  const result = byId("resultScreen");
+  if(!result) return;
+
+  let old = byId("proAnalytics");
+  if(old) old.remove();
+
+  const wrap = document.createElement("div");
+  wrap.id = "proAnalytics";
+  wrap.className = "card";
+  wrap.style.marginTop = "14px";
+
+  const sorted = Object.entries(weakTopics)
+  .sort((a,b)=>b[1]-a[1])
+  .slice(0,3);
+
+  let html = `
+  <div class="title">Pro Analytics</div>
+  <div class="sub">Weak Topics + Improvement Tips</div>
+  `;
+
+  if(sorted.length === 0){
+    html += `<p style="margin-top:10px;color:#22c55e;font-weight:700">No weak topics yet. Great job!</p>`;
+  }else{
+    sorted.forEach(item=>{
+      html += `
+      <div style="margin-top:10px;padding:10px;border-radius:12px;background:rgba(255,255,255,.05)">
+        <b>${item[0]}</b> mistakes: ${item[1]}<br>
+        <span style="color:#9fb3d9;font-size:13px">Practice 5 extra questions daily.</span>
+      </div>
+      `;
+    });
+  }
+
+  html += `
+  <button class="btn secondary" onclick="repeatWeakPractice()" style="margin-top:12px">
+    Weak Topic Practice
+  </button>
+  `;
+
+  wrap.innerHTML = html;
+  result.querySelector(".card").appendChild(wrap);
+}
+
+/* ---------- Weak Practice ---------- */
+window.repeatWeakPractice = function(){
+
+  const keys = Object.keys(weakTopics);
+
+  if(keys.length === 0){
+    showToast("No weak topic found yet.");
+    return;
+  }
+
+  const top = keys.sort((a,b)=>weakTopics[b]-weakTopics[a])[0];
+
+  let map = {
+    "Addition":"add",
+    "Subtraction":"sub",
+    "Multiplication":"mul",
+    "Percentage":"percent",
+    "Mixed":"mix"
+  };
+
+  app.mode = "quick";
+  app.questions = [];
+
+  for(let i=0;i<10;i++){
+    app.questions.push(makeQuestion(map[top] || "mix"));
+  }
+
+  startSession(top + " Recovery Practice");
+};
+
+/* ---------- Sound Effects ---------- */
+const AudioCtx = window.AudioContext || window.webkitAudioContext;
+let ctx = null;
+
+function beep(freq,dur){
+  try{
+    if(!ctx) ctx = new AudioCtx();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+
+    osc.frequency.value = freq;
+    osc.type = "sine";
+
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+
+    gain.gain.value = .03;
+    osc.start();
+
+    setTimeout(()=>{
+      osc.stop();
+    },dur);
+
+  }catch(e){}
+}
+
+/* Hook showMsg */
+if(typeof showMsg === "function"){
+  const oldMsg = showMsg;
+
+  window.showMsg = function(txt,good){
+    oldMsg(txt,good);
+
+    // Sound + vibration only for wrong answer
+    if(!good){
+      /* wrong sound now handled by UASound */
+
+      if(navigator.vibrate){
+        navigator.vibrate([120,60,120]);
+      }
+    }
+  };
+}
+
+/* ---------- Watermark ---------- */
+const wm = document.createElement("div");
+wm.innerHTML = "ULTIMA ACADEMY";
+wm.style.cssText = `
+position:fixed;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+font-size:42px;
+font-weight:900;
+opacity:.03;
+pointer-events:none;
+z-index:0;
+white-space:nowrap;
+`;
+document.body.appendChild(wm);
+
+/* ---------- Auto Daily Bonus ---------- */
+const today = new Date().toDateString();
+const bonusKey = "dailyBonusDate";
+
+if(localStorage.getItem(bonusKey) !== today){
+  localStorage.setItem(bonusKey, today);
+
+  if(typeof app !== "undefined"){
+    app.xp += 15;
+    if(typeof safeSave === "function") safeSave();
+    if(typeof updateHeader === "function") updateHeader();
+
+    setTimeout(()=>{
+      showToast("Daily Login Bonus +15 XP 🎁");
+    },1200);
+  }
+}
+
+/* ---------- Final Init ---------- */
+setTimeout(()=>{
+  showToast("PRO MAX Mode Activated 🚀");
+},1000);
+
+})();
+</script>
+<script>
+/* =====================================================
+   PART 4 ULTRA ADVANCE FEATURES + BETTER INTERFACE
+   Paste BELOW Part 3 Max (before </body>)
+   Compatible with Part 1 + 2 + 3
+===================================================== */
+
+(function(){
+
+/* ===============================
+   SAFE HELPERS
+=============================== */
+function el(id){ return document.getElementById(id); }
+function qs(s){ return document.querySelector(s); }
+function qsa(s){ return document.querySelectorAll(s); }
+
+/* ===============================
+   GLOBAL STYLE INJECTION
+=============================== */
+const style = document.createElement("style");
+style.innerHTML = `
+/* Floating particles */
+.fx-particle{
+ position:fixed;
+ width:6px;height:6px;
+ border-radius:50%;
+ background:rgba(0,217,255,.6);
+ pointer-events:none;
+ z-index:0;
+ animation:floatUp linear forwards;
+}
+@keyframes floatUp{
+ from{transform:translateY(0) scale(1);opacity:1}
+ to{transform:translateY(-120px) scale(.2);opacity:0}
+}
+
+/* Glass premium top panel */
+.ultra-panel{
+margin-top:14px;
+padding:14px;
+border-radius:18px;
+background:linear-gradient(135deg,rgba(255,255,255,.08),rgba(255,255,255,.03));
+border:1px solid rgba(255,255,255,.12);
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+gap:10px;
+backdrop-filter:blur(10px);
+}
+
+.mini-box{
+padding:12px;
+border-radius:14px;
+background:rgba(255,255,255,.04);
+border:1px solid rgba(255,255,255,.08);
+text-align:center;
+}
+
+.mini-box b{
+display:block;
+font-size:18px;
+margin-top:4px;
+}
+
+.topic-chip{
+display:inline-block;
+padding:8px 12px;
+border-radius:999px;
+background:rgba(255,255,255,.06);
+margin:4px;
+font-size:12px;
+border:1px solid rgba(255,255,255,.1);
+}
+
+#focusMode{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.75);
+backdrop-filter:blur(8px);
+display:none;
+z-index:9998;
+}
+
+#focusMode .inner{
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+width:min(92%,420px);
+padding:24px;
+border-radius:24px;
+background:#0b1020;
+border:1px solid rgba(255,255,255,.1);
+text-align:center;
+}
+
+.pulse-btn{
+animation:pulseBtn 1.8s infinite;
+}
+@keyframes pulseBtn{
+0%{transform:scale(1)}
+50%{transform:scale(1.04)}
+100%{transform:scale(1)}
+}
+`;
+document.head.appendChild(style);
+
+/* ===============================
+   DASHBOARD UPGRADE PANEL
+=============================== */
+function buildUltraPanel(){
+  const dash = el("dashboard");
+  if(!dash || el("ultraPanel")) return;
+
+  const panel = document.createElement("div");
+  panel.id = "ultraPanel";
+  panel.className = "ultra-panel";
+
+  panel.innerHTML = `
+    <div class="mini-box">
+      Today Goal
+      <b id="todayGoal">20 Q</b>
+    </div>
+
+    <div class="mini-box">
+      Best Accuracy
+      <b id="bestAcc">0%</b>
+    </div>
+
+    <div class="mini-box">
+      Total Solved
+      <b id="totalSolved">0</b>
+    </div>
+
+    <div class="mini-box">
+      Focus Level
+      <b id="focusLevel">Normal</b>
+    </div>
+  `;
+
+  dash.appendChild(panel);
+}
+
+/* ===============================
+   DATA TRACKER
+=============================== */
+let ultra = loadUltra();
+window.__uaUltra = ultra;
+
+function loadUltra(){
+  try{
+    return JSON.parse(localStorage.getItem("ultraStats")) || {
+      bestAcc:0,
+      totalSolved:0,
+      sessions:0,
+      focus:"Normal"
+    };
+  }catch(e){
+    return {
+      bestAcc:0,totalSolved:0,sessions:0,focus:"Normal"
+    };
+  }
+}
+
+function saveUltra(){
+  localStorage.setItem("ultraStats", JSON.stringify(ultra));
+}
+
+function refreshUltra(){
+  if(el("bestAcc")) el("bestAcc").textContent = ultra.bestAcc + "%";
+  if(el("totalSolved")) el("totalSolved").textContent = ultra.totalSolved;
+  if(el("focusLevel")) el("focusLevel").textContent = ultra.focus;
+}
+
+/* ===============================
+   SESSION HOOK
+=============================== */
+if(typeof finishSession === "function"){
+  const oldFinish = finishSession;
+
+  window.finishSession = function(){
+
+    let total = 0;
+    let score = 0;
+    try{
+      total = app.questions.length || 0;
+      score = app.score || 0;
+    }catch(e){}
+
+    const acc = total ? Math.round((score/total)*100) : 0;
+
+    ultra.bestAcc = Math.max(ultra.bestAcc, acc);
+    ultra.totalSolved += total;
+    ultra.sessions += 1;
+    saveUltra();
+
+    oldFinish();
+    refreshUltra();
+
+    setTimeout(showSmartReport,500);
+  };
+}
+
+/* ===============================
+   SMART REPORT
+=============================== */
+function showSmartReport(){
+
+  const box = qs("#resultScreen .card");
+  if(!box || el("smartReport")) return;
+
+  const total = app.questions.length || 0;
+  const score = app.score || 0;
+  const acc = total ? Math.round((score/total)*100) : 0;
+
+  let msg = "Good effort. Keep consistency.";
+  if(acc >= 90) msg = "Excellent speed & accuracy. Exam ready vibe!";
+  else if(acc >= 75) msg = "Strong performance. Push little more.";
+  else if(acc >= 50) msg = "Average attempt. Revise basics today.";
+  else msg = "Need practice. Start with easier sets.";
+
+  const div = document.createElement("div");
+  div.id = "smartReport";
+  div.className = "card";
+  div.style.marginTop = "14px";
+
+  div.innerHTML = `
+    <div class="title">AI Smart Report</div>
+    <div class="sub">${msg}</div>
+
+    <div style="margin-top:12px">
+      <span class="topic-chip">Accuracy ${acc}%</span>
+      <span class="topic-chip">Solved ${score}/${total}</span>
+      <span class="topic-chip">Sessions ${ultra.sessions}</span>
+    </div>
+
+    <button class="btn pulse-btn" onclick="activateFocusMode()" style="margin-top:14px">
+      Start Focus Sprint
+    </button>
+  `;
+
+  box.appendChild(div);
+}
+
+/* ===============================
+   FOCUS MODE
+=============================== */
+const focus = document.createElement("div");
+focus.id = "focusMode";
+focus.innerHTML = `
+<div class="inner">
+  <h2 style="margin-bottom:10px">⚡ Focus Sprint</h2>
+  <p style="color:#9fb3d9;margin-bottom:14px">
+    5 minute distraction-free practice mindset activated.
+  </p>
+  <button class="btn" onclick="closeFocusMode()">Continue Grinding</button>
+</div>
+`;
+document.body.appendChild(focus);
+
+window.activateFocusMode = function(){
+  ultra.focus = "High";
+  saveUltra();
+  refreshUltra();
+  focus.style.display = "block";
+};
+
+window.closeFocusMode = function(){
+  focus.style.display = "none";
+};
+
+/* ===============================
+   PARTICLE FX
+=============================== */
+function particle(){
+  const p = document.createElement("div");
+  p.className = "fx-particle";
+  p.style.left = Math.random()*100 + "%";
+  p.style.bottom = "0px";
+  p.style.animationDuration = (2 + Math.random()*2) + "s";
+  document.body.appendChild(p);
+
+  setTimeout(()=>p.remove(),4000);
+}
+
+setInterval(particle,900);
+
+/* ===============================
+   BUTTON FEEDBACK
+=============================== */
+document.addEventListener("click",function(e){
+  const t = e.target;
+  if(t.classList && t.classList.contains("btn")){
+    t.style.transform = "scale(.96)";
+    setTimeout(()=>t.style.transform="",120);
+  }
+});
+
+/* ===============================
+   AUTO INIT
+=============================== */
+buildUltraPanel();
+refreshUltra();
+
+})();
+</script>
+<script>
+/* =====================================================
+   PART 5 ULTIMATE PRO LEVEL
+   Paste BELOW Part 4 (before </body>)
+   Compatible with Part 1 + 2 + 3 + 4
+===================================================== */
+
+(function(){
+
+/* ===============================
+   SAFE HELPERS
+=============================== */
+function el(id){ return document.getElementById(id); }
+function ce(tag){ return document.createElement(tag); }
+
+/* ===============================
+   GLOBAL STYLE
+=============================== */
+const style = ce("style");
+style.innerHTML = `
+/* Math symbol rain */
+.math-fx{
+ position:fixed;
+ top:-40px;
+ color:rgba(255,255,255,.08);
+ font-weight:900;
+ pointer-events:none;
+ z-index:0;
+ user-select:none;
+ animation:fallMath linear forwards;
+}
+@keyframes fallMath{
+ from{transform:translateY(-40px) rotate(0deg);opacity:.1}
+ to{transform:translateY(110vh) rotate(360deg);opacity:.02}
+}
+
+/* Bottom navbar */
+#proNav{
+ position:fixed;
+ left:50%;
+ bottom:14px;
+ transform:translateX(-50%);
+ width:min(95%,520px);
+ padding:10px;
+ border-radius:22px;
+ background:rgba(10,12,20,.82);
+ border:1px solid rgba(255,255,255,.08);
+ backdrop-filter:blur(12px);
+ display:flex;
+ justify-content:space-around;
+ z-index:9997;
+ box-shadow:0 10px 25px rgba(0,0,0,.35);
+}
+
+.navBtn{
+ flex:1;
+ margin:0 2px;
+ border:none;
+ color:#fff;
+ background:rgba(255,255,255,.04);
+ padding:6px 0;
+ border-radius:14px;
+ font-size:10px;
+ line-height:1.15;
+ display:flex;
+ flex-direction:column;
+ align-items:center;
+ gap:1px;
+ font-weight:700;
+ cursor:pointer;
+}
+
+.navBtn .ni{font-size:17px}
+.navBtn:hover{
+ background:rgba(255,255,255,.08);
+}
+
+/* Daily reward chest */
+#rewardChest{
+ position:relative;
+ order:3;
+ flex:0 0 auto;
+ width:42px;
+ height:42px;
+ border-radius:14px;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ background:linear-gradient(135deg,#ffe17a,#d99b0b);
+ border:1px solid #ffdc66;
+ box-shadow:0 4px 14px rgba(244,189,45,.28);
+ font-size:22px;
+ cursor:pointer;
+ animation:chestBounce 2s infinite;
+}
+@keyframes chestBounce{
+ 0%,100%{transform:translateY(0)}
+ 50%{transform:translateY(-3px)}
+}
+
+/* Modal */
+#proModal{
+ position:fixed;
+ inset:0;
+ background:rgba(0,0,0,.75);
+ display:none;
+ z-index:9999;
+ backdrop-filter:blur(8px);
+}
+#proModal .box{
+ width:min(92%,420px);
+ margin:10vh auto;
+ padding:22px;
+ border-radius:24px;
+ background:#0b1020;
+ border:1px solid rgba(255,255,255,.08);
+ color:#fff;
+}
+
+/* Rank badge */
+.rank-badge{
+ display:inline-block;
+ padding:8px 12px;
+ border-radius:999px;
+ margin-top:8px;
+ font-weight:800;
+ background:rgba(255,255,255,.06);
+ border:1px solid rgba(255,255,255,.08);
+}
+
+/* Loader */
+#proLoader{
+ position:fixed;
+ inset:0;
+ background:#050505;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ flex-direction:column;
+ z-index:10000;
+ color:#fff;
+}
+#proLoader .ring{
+ width:68px;height:68px;
+ border-radius:50%;
+ border:4px solid rgba(255,255,255,.1);
+ border-top:4px solid #f4bd2d;
+ animation:spin 1s linear infinite;
+ margin-bottom:14px;
+}
+@keyframes spin{
+ from{transform:rotate(0deg)}
+ to{transform:rotate(360deg)}
+}
+`;
+document.head.appendChild(style);
+
+/* ===============================
+   SPLASH LOADER
+=============================== */
+const loader = ce("div");
+loader.id = "proLoader";
+loader.innerHTML = `
+<div class="ring"></div>
+<div style="font-weight:900;font-size:20px;color:#ffe08a;letter-spacing:2px">ULTIMA ACADEMY</div>
+<div style="margin-top:8px;color:#d0c8b4">Loading Pro Experience...</div>
+`;
+document.body.appendChild(loader);
+
+setTimeout(()=>{
+ loader.style.transition=".5s";
+ loader.style.opacity="0";
+ setTimeout(()=>loader.remove(),550);
+},1800);
+
+/* ===============================
+   SYMBOL BACKGROUND RAIN
+=============================== */
+const symbols = ["+","−","×","÷","%","√","π","=","₹"];
+
+function spawnMath(){
+ const s = ce("div");
+ s.className = "math-fx";
+ s.innerText = symbols[Math.floor(Math.random()*symbols.length)];
+ s.style.left = Math.random()*100 + "%";
+ s.style.fontSize = (16 + Math.random()*28) + "px";
+ s.style.animationDuration = (5 + Math.random()*5) + "s";
+ document.body.appendChild(s);
+
+ setTimeout(()=>s.remove(),11000);
+}
+setInterval(spawnMath,700);
+
+/* ===============================
+   BOTTOM NAVBAR
+=============================== */
+const nav = ce("div");
+nav.id = "proNav";
+nav.innerHTML = `
+<button class="navBtn" onclick="showScreen('dashboard')"><span class="ni">🏠</span>Home</button>
+<button class="navBtn" onclick="showScreen('daysScreen')"><span class="ni">📅</span>Days</button>
+<button class="navBtn" onclick="startQuickPractice()"><span class="ni">⚡</span>Practice</button>
+<button class="navBtn" onclick="openGrowth('calendar')"><span class="ni">📈</span>Growth</button>
+<button class="navBtn" onclick="UACloud.openBoard()"><span class="ni">🏆</span>Board</button>
+<button class="navBtn" onclick="openProfile()"><span class="ni">👤</span>Profile</button>
+`;
+document.body.appendChild(nav);
+
+/* ===============================
+   DAILY REWARD CHEST
+=============================== */
+const chest = ce("div");
+chest.id = "rewardChest";
+chest.innerHTML = "🎁";
+chest.title = "Claim daily reward";
+(document.querySelector("header .topbar") || document.body).appendChild(chest);
+
+chest.onclick = function(){
+
+ const today = new Date().toDateString();
+ const key = "rewardClaimDate";
+
+ if(localStorage.getItem(key) === today){
+   openModal("Reward Already Claimed Today ✅");
+   return;
+ }
+
+ localStorage.setItem(key, today);
+
+ if(typeof app !== "undefined"){
+   const gain = 25;
+   app.xp += gain;
+   if(typeof safeSave === "function") safeSave();
+   if(typeof updateHeader === "function") updateHeader();
+ }
+
+ openModal("🎉 Daily Reward Claimed! +25 XP");
+};
+
+/* ===============================
+   MODAL SYSTEM
+=============================== */
+const modal = ce("div");
+modal.id = "proModal";
+modal.innerHTML = `
+<div class="box">
+  <div id="modalContent"></div>
+  <button class="btn" onclick="closeModal()" style="margin-top:14px">Close</button>
+</div>
+`;
+document.body.appendChild(modal);
+
+window.openModal = function(text){
+ el("modalContent").innerHTML = text;
+ modal.style.display = "block";
+};
+
+window.closeModal = function(){
+ modal.style.display = "none";
+};
+
+/* ===============================
+   PROFILE PANEL
+=============================== */
+window.openProfile = function(){
+
+ let xp = (typeof app !== "undefined") ? app.xp : 0;
+ let StreaX = (typeof app !== "undefined") ? app.StreaX : 0;
+
+ let rank = "Beginner";
+ if(xp >= 2500) rank = "SSC Beast 👑";
+ else if(xp >= 1800) rank = "Legend";
+ else if(xp >= 1200) rank = "Titan";
+ else if(xp >= 600) rank = "Master";
+ else if(xp >= 250) rank = "Warrior";
+
+ openModal(`
+   <h2 style="margin-bottom:10px">👤 Player Profile</h2>
+
+   <div style="margin:10px 0">⭐ XP: <b>${xp}</b></div>
+   <div style="margin:10px 0">🔥 StreaX: <b>${StreaX}</b></div>
+
+   <div class="rank-badge">${rank}</div>
+
+   <div style="margin-top:16px;color:#9fb3d9">
+   Keep practicing daily to reach SSC Beast Rank.
+   </div>
+ `);
+};
+
+/* ===============================
+   INSTALL APP FEEL
+=============================== */
+setTimeout(()=>{
+ if(!localStorage.getItem("pwaHintShown")){
+   localStorage.setItem("pwaHintShown","1");
+   openModal(`
+     <h2>📲 Install Feel</h2>
+     <p style="margin-top:10px;color:#9fb3d9">
+       Chrome menu → Add to Home Screen  
+       for app-like experience.
+     </p>
+   `);
+ }
+},5000);
+
+/* ===============================
+   SESSION BOOSTER
+=============================== */
+if(typeof finishSession === "function"){
+ const oldFinish = finishSession;
+
+ window.finishSession = function(){
+   oldFinish();
+
+   try{
+     if(app.score === app.questions.length){
+       setTimeout(()=>{
+         openModal("🏅 Perfect Score Badge Unlocked!");
+       },600);
+     }
+   }catch(e){}
+ };
+}
+
+})();
+</script>
+<script>
+/* =====================================================
+   PART 6 ELITE PERSONAL AI SYSTEM
+   Paste BELOW Part 5 (before </body>)
+   Compatible with Part 1-5
+===================================================== */
+
+(function(){
+
+/* ===============================
+   SAFE HELPERS
+=============================== */
+function el(id){ return document.getElementById(id); }
+function ce(tag){ return document.createElement(tag); }
+function save(key,val){ localStorage.setItem(key, JSON.stringify(val)); }
+function load(key,fallback){
+  try{ return JSON.parse(localStorage.getItem(key)) || fallback; }
+  catch(e){ return fallback; }
+}
+
+/* ===============================
+   USER PROFILE DATA
+=============================== */
+let profile = load("eliteProfile", {
+  name:"",
+  goal:"SSC",
+  examDate:"",
+  joinDate:new Date().toDateString(),
+  badges:[]
+});
+
+let analytics = load("eliteAnalytics", {
+  daily:[],
+  weeklyXP:0,
+  monthlyXP:0,
+  sessions:0
+});
+
+/* ===============================
+   STYLE
+=============================== */
+const style = ce("style");
+style.innerHTML = `
+#eliteOverlay{
+ position:fixed;
+ inset:0;
+ background:rgba(0,0,0,.75);
+ z-index:10001;
+ display:none;
+ backdrop-filter:blur(8px);
+}
+#eliteOverlay .box{
+ width:min(92%,460px);
+ margin:8vh auto;
+ background:#0b1020;
+ border-radius:24px;
+ padding:22px;
+ border:1px solid rgba(255,255,255,.08);
+ color:#fff;
+}
+.eliteInput{
+ width:100%;
+ padding:12px;
+ margin-top:10px;
+ border-radius:14px;
+ border:1px solid rgba(255,255,255,.08);
+ background:rgba(255,255,255,.04);
+ color:#fff;
+ outline:none;
+}
+.eliteCard{
+ margin-top:14px;
+ padding:14px;
+ border-radius:18px;
+ background:rgba(255,255,255,.04);
+ border:1px solid rgba(255,255,255,.08);
+}
+.badge{
+ display:inline-block;
+ padding:8px 12px;
+ border-radius:999px;
+ background:rgba(255,255,255,.06);
+ margin:4px;
+ font-size:12px;
+}
+`;
+document.head.appendChild(style);
+
+/* ===============================
+   OVERLAY
+=============================== */
+const overlay = ce("div");
+overlay.id = "eliteOverlay";
+overlay.innerHTML = `<div class="box" id="eliteBox"></div>`;
+document.body.appendChild(overlay);
+
+function openElite(html){
+  el("eliteBox").innerHTML = html;
+  overlay.style.display = "block";
+}
+window.closeElite = function(){
+  overlay.style.display = "none";
+};
+
+/* ===============================
+   FIRST TIME PROFILE SETUP
+=============================== */
+function firstSetup(){
+
+ if(profile.name) return;
+
+ openElite(`
+   <h2>👤 Welcome Champion</h2>
+   <p style="color:#9fb3d9;margin-top:8px">
+     Setup your personal exam profile.
+   </p>
+
+   <input id="pName" class="eliteInput" placeholder="Enter Name">
+
+   <select id="pGoal" class="eliteInput">
+     <option>SSC</option>
+     <option>Banking</option>
+     <option>Railway</option>
+   </select>
+
+   <input id="pDate" type="date" class="eliteInput">
+
+   <button class="btn" onclick="saveProfileElite()" style="margin-top:14px">
+     Start Journey 🚀
+   </button>
+ `);
+}
+
+window.saveProfileElite = function(){
+
+ profile.name = el("pName").value.trim() || "Champion";
+ profile.goal = el("pGoal").value;
+ profile.examDate = el("pDate").value;
+
+ save("eliteProfile", profile);
+ closeElite();
+ greetUser();
+};
+
+/* ===============================
+   PERSONAL GREETING
+=============================== */
+
+
+/* ===============================
+   DAILY MOTIVATION ENGINE
+=============================== */
+function motivationLine(){
+
+ let xp = (typeof app !== "undefined") ? app.xp : 0;
+ let StreaX = (typeof app !== "undefined") ? app.StreaX : 0;
+
+ if(StreaX >= 10) return "Consistency is making you dangerous.";
+ if(xp >= 1000) return "You are entering topper zone.";
+ if(StreaX >= 5) return "Momentum is on your side.";
+ return "Small daily wins become big results.";
+}
+
+setTimeout(()=>{
+ if(typeof showToast === "function"){
+   showToast(motivationLine());
+ }
+},2600);
+
+/* ===============================
+   DAILY REWARD WHEEL
+=============================== */
+window.openRewardWheel = function(){
+
+ const rewards = [
+   "+20 XP",
+   "+35 XP",
+   "Double XP Today",
+   "StreaX Shield",
+   "Badge Unlock",
+   "+50 XP"
+ ];
+
+ const reward = rewards[Math.floor(Math.random()*rewards.length)];
+
+ if(reward.includes("XP")){
+   const num = parseInt(reward);
+   if(typeof app !== "undefined"){
+     app.xp += num;
+     if(typeof safeSave === "function") safeSave();
+     if(typeof updateHeader === "function") updateHeader();
+   }
+ }
+
+ if(reward === "Badge Unlock"){
+   giveBadge("Lucky Spinner");
+ }
+
+ openElite(`
+   <h2>🎡 Reward Wheel</h2>
+   <div class="eliteCard" style="text-align:center;font-size:22px;font-weight:900">
+     ${reward}
+   </div>
+   <button class="btn" onclick="closeElite()" style="margin-top:14px">Awesome!</button>
+ `);
+};
+
+/* ===============================
+   BADGE SYSTEM
+=============================== */
+function giveBadge(name){
+
+ if(profile.badges.includes(name)) return;
+
+ profile.badges.push(name);
+ save("eliteProfile", profile);
+}
+
+/* ===============================
+   SESSION TRACKING
+=============================== */
+if(typeof finishSession === "function"){
+
+ const oldFinish = finishSession;
+
+ window.finishSession = function(){
+
+   oldFinish();
+
+   let total = app.questions.length || 0;
+   let score = app.score || 0;
+   let acc = total ? Math.round((score/total)*100) : 0;
+
+   analytics.daily.push({
+     date:new Date().toDateString(),
+     score:score,
+     total:total,
+     acc:acc
+   });
+
+   analytics.sessions += 1;
+   analytics.weeklyXP += 20;
+   analytics.monthlyXP += 20;
+
+   if(acc >= 90) giveBadge("Accuracy King");
+   if(score === total) giveBadge("Perfect Score");
+
+   save("eliteAnalytics", analytics);
+
+   setTimeout(showWeeklyReport,700);
+ };
+}
+
+/* ===============================
+   WEEKLY REPORT
+=============================== */
+function showWeeklyReport(){
+
+ const last7 = analytics.daily.slice(-7);
+
+ let solved = 0;
+ let accTotal = 0;
+
+ last7.forEach(x=>{
+   solved += x.total;
+   accTotal += x.acc;
+ });
+
+ const avg = last7.length ? Math.round(accTotal / last7.length) : 0;
+
+ openElite(`
+   <h2>📊 Weekly Analysis</h2>
+
+   <div class="eliteCard">
+     Questions Solved: <b>${solved}</b><br>
+     Avg Accuracy: <b>${avg}%</b><br>
+     Sessions: <b>${analytics.sessions}</b><br>
+     XP This Week: <b>${analytics.weeklyXP}</b>
+   </div>
+
+   <button class="btn" onclick="showMonthlyReport()" style="margin-top:12px">
+     Monthly Report
+   </button>
+
+   <button class="btn secondary" onclick="closeElite()" style="margin-top:8px">
+     Close
+   </button>
+ `);
+}
+
+/* ===============================
+   MONTHLY REPORT
+=============================== */
+window.showMonthlyReport = function(){
+
+ const last30 = analytics.daily.slice(-30);
+
+ let totalQ = 0;
+ let accSum = 0;
+
+ last30.forEach(x=>{
+   totalQ += x.total;
+   accSum += x.acc;
+ });
+
+ const avg = last30.length ? Math.round(accSum / last30.length) : 0;
+
+ openElite(`
+   <h2>📅 Monthly Report</h2>
+
+   <div class="eliteCard">
+     Total Questions: <b>${totalQ}</b><br>
+     Avg Accuracy: <b>${avg}%</b><br>
+     XP This Month: <b>${analytics.monthlyXP}</b><br>
+     Discipline Score: <b>${Math.min(100,last30.length*4)}%</b>
+   </div>
+
+   <button class="btn" onclick="showProfileElite()" style="margin-top:12px">
+     View Profile
+   </button>
+
+   <button class="btn secondary" onclick="closeElite()" style="margin-top:8px">
+     Close
+   </button>
+ `);
+};
+
+/* ===============================
+   PROFILE PAGE
+=============================== */
+window.showProfileElite = function(){
+
+ let badges = profile.badges.length
+ ? profile.badges.map(b=>`<span class="badge">${b}</span>`).join("")
+ : "No badges yet";
+
+ openElite(`
+   <h2>👤 ${profile.name}</h2>
+
+   <div class="eliteCard">
+     Goal: <b>${profile.goal}</b><br>
+     Join Date: <b>${profile.joinDate}</b><br>
+     Exam Date: <b>${profile.examDate || "Not Set"}</b>
+   </div>
+
+   <div class="eliteCard">
+     <b>Badges</b><br><br>
+     ${badges}
+   </div>
+
+   <button class="btn" onclick="openRewardWheel()" style="margin-top:12px">
+     Open Reward Wheel 🎁
+   </button>
+
+   <button class="btn secondary" onclick="closeElite()" style="margin-top:8px">
+     Close
+   </button>
+ `);
+};
+
+/* ===============================
+   INIT
+=============================== */
+setTimeout(firstSetup,2200);
+setTimeout(greetUser,3500);
+
+})();
+</script>
+<script>
+(function(){
+
+/* ================= STYLE ================= */
+const style = document.createElement("style");
+style.innerHTML = `
+#advOverlay{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.78);
+display:none;
+z-index:10020;
+backdrop-filter:blur(8px);
+}
+#advOverlay .box{
+width:min(92%,480px);
+margin:7vh auto;
+background:#0b1020;
+padding:22px;
+border-radius:24px;
+border:1px solid rgba(255,255,255,.08);
+color:#fff;
+}
+.advGrid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:8px;
+margin-top:12px;
+}
+.advBtn{
+padding:12px;
+border:none;
+border-radius:14px;
+background:rgba(255,255,255,.05);
+color:#fff;
+cursor:pointer;
+font-weight:700;
+}
+.advBtn.active{
+background:linear-gradient(90deg,#00d9ff,#8b5cf6);
+}
+`;
+document.head.appendChild(style);
+
+/* ================= CARD ================= */
+const dash = document.getElementById("dashboard");
+
+if(dash){
+const card = document.createElement("div");
+card.className="card";
+
+card.innerHTML = `
+<div class="title">⚡ Advanced Practice Tool</div>
+<div class="sub">SSC Speed Booster Practice</div>
+<button class="btn" onclick="openAdvancedPractice()">Launch Tool</button>
+`;
+
+const grid = dash.querySelector(".grid");
+if(grid) grid.insertBefore(card, grid.children[2]);
+}
+
+/* ================= OVERLAY ================= */
+const overlay = document.createElement("div");
+overlay.id="advOverlay";
+
+overlay.innerHTML = `
+<div class="box">
+<h2>Advanced Practice Tool</h2>
+
+<div style="margin-top:14px;font-weight:700">Select Topic</div>
+<div class="advGrid" id="topicGrid"></div>
+
+<div style="margin-top:16px;font-weight:700">Select Duration</div>
+<div class="advGrid" id="timeGrid"></div>
+
+<button class="btn" style="margin-top:18px" onclick="startAdvancedPractice()">
+Start Session
+</button>
+
+<button class="btn secondary" style="margin-top:8px" onclick="closeAdvancedPractice()">
+Close
+</button>
+</div>
+`;
+
+document.body.appendChild(overlay);
+
+/* ================= OPTIONS ================= */
+const topics = [
+["add","Addition"],
+["sub","Subtraction"],
+["mul","Multiplication"],
+["div","Division"],
+["square","Squares"],
+["cube","Cubes"],
+["percent","Percentage"],
+["mix","Mixed"]
+];
+
+const times=[1,2,3,4,5,6,7,8,9,10];
+
+let advTopic="mix";
+let advTime=2;
+window.advSessionTimer=null;
+window.advSeconds=0;
+let advAttempted=0;
+
+/* ================= RENDER ================= */
+function renderAdv(){
+
+const tg=document.getElementById("topicGrid");
+const tm=document.getElementById("timeGrid");
+
+tg.innerHTML="";
+tm.innerHTML="";
+
+topics.forEach(t=>{
+const b=document.createElement("button");
+b.className="advBtn";
+if(t[0]===advTopic) b.classList.add("active");
+b.textContent=t[1];
+b.onclick=()=>{
+advTopic=t[0];
+renderAdv();
+};
+tg.appendChild(b);
+});
+
+times.forEach(x=>{
+const b=document.createElement("button");
+b.className="advBtn";
+if(x===advTime) b.classList.add("active");
+b.textContent=x+" Min";
+b.onclick=()=>{
+advTime=x;
+renderAdv();
+};
+tm.appendChild(b);
+});
+
+}
+renderAdv();
+
+/* ================= OPEN CLOSE ================= */
+window.openAdvancedPractice=()=>overlay.style.display="block";
+window.closeAdvancedPractice=()=>{
+clearAdvancedTimer();
+overlay.style.display="none";
+};
+
+/* ================= QUESTION ENGINE ================= */
+if(typeof makeQuestion==="function"){
+
+const oldMake=makeQuestion;
+
+window.makeQuestion=function(type){
+
+// MIX mode
+if(type==="mix"){
+const arr=["add","sub","mul","div","percent"];
+type=arr[Math.floor(Math.random()*arr.length)];
+}
+
+// PERCENTAGE
+if(type==="percent"){
+let num=rand(50,500);
+let per=rand(1,50);
+return{
+q: per + "% of " + num,
+ans: Math.round(per*num)/100,
+topic:"Percentage"
+};
+}
+
+// DIVISION FIX
+if(type==="div"){
+let b=rand(2,20);
+let ans=rand(2,50);
+let a=b*ans;
+return{
+q: a + " ÷ " + b,
+ans: ans,
+topic:"Division"
+};
+}
+
+return oldMake(type);
+};
+}
+
+/* ================= START ================= */
+window.startAdvancedPractice=function(){
+
+closeAdvancedPractice();
+clearTimer();
+clearAdvancedTimer();
+
+app.mode="advanced";
+app.questions=[];
+app.index=0;
+app.score=0;
+app.wrong=0;
+
+advAttempted=0;
+advSeconds=advTime*60;
+
+for(let i=0;i<500;i++){
+app.questions.push(makeQuestion(advTopic));
+}
+
+startSession("⚡ " + advTopic.toUpperCase() + " SPEED ("+advTime+" Min)");
+
+window.advSessionTimer=setInterval(()=>{
+advSeconds--;
+document.getElementById("time").textContent=advSeconds;
+if(advSeconds>0) UASound.tick(advSeconds<=10);
+
+if(advSeconds<=0){
+finishAdvanced();
+}
+},1000);
+};
+
+/* ================= ATTEMPT ================= */
+if(typeof checkAnswer==="function"){
+const originalCheckAnswer=checkAnswer;
+window.checkAnswer=function(){
+  if(app.mode!=="advanced") return originalCheckAnswer();
+  const inp=document.getElementById("answerInput");
+  const raw=inp ? inp.value.trim() : "";
+  if(raw===""){ showMsg("Enter Answer",false); return; }
+  const elapsed=(Date.now()-(window.__uaQuestionStartedAt||Date.now()))/1000;
+  const user=Number(raw), real=Number(app.questions[app.index].ans);
+  advAttempted++;
+  if(user===real){
+    app.score++; playUASound(true);
+    if(elapsed<=2.2){ showMsg("⚡ INCREDIBLE SPEED! Candy-crush combo! 🍬 +2 bonus XP",true); app.xp+=2; }
+    else showMsg(["Correct! Brilliant! ✨","Nailed it! Keep the StreaX alive! 🔥","Great work, Champion! 🏆"][Math.floor(Math.random()*3)],true);
+  }else{ app.wrong++; logMistake("wrong",raw); playUASound(false); showMsg("Incorrect ❌ Correct answer: "+real+" — learn it and level up 💪",false); }
+  if(inp) inp.value="";
+  setTimeout(()=>{ app.index++; nextQuestion(); },650);
+};
+}
+
+/* ================= RESULT ================= */
+window.finishAdvanced=function(){
+
+clearAdvancedTimer();
+
+const acc=advAttempted
+? Math.round((app.score/advAttempted)*100)
+:0;
+
+const qpm=(advAttempted/advTime).toFixed(1);
+const xpGain=app.score*3;
+
+app.xp+=xpGain;
+
+if(typeof safeSave==="function") safeSave();
+if(typeof updateHeader==="function") updateHeader();
+
+document.getElementById("scoreText").textContent=
+app.score+"/"+advAttempted;
+
+document.getElementById("accText").textContent=
+acc+"%";
+
+document.getElementById("xpEarned").textContent=
+xpGain+" | Speed: "+qpm+" QPM";
+
+showScreen("resultScreen");
+};
+
+/* ================= OVERRIDE ================= */
+if(typeof finishSession==="function"){
+const oldFinish=finishSession;
+window.finishSession=function(){
+if(app.mode==="advanced"){
+finishAdvanced();
+return;
+}
+oldFinish();
+};
+}
+
+/* ================= FEEDBACK SOUNDS + QUESTION TIMING ================= */
+function playUASound(correct){ if(correct) UASound.correct(); else UASound.wrong(); }
+const uaOriginalNextQuestion=window.nextQuestion;
+if(typeof uaOriginalNextQuestion==="function"){
+  window.nextQuestion=function(){
+    uaOriginalNextQuestion();
+    window.__uaQuestionStartedAt=Date.now();
+  };
+}
+
+/* ================= CLEAR TIMER ================= */
+function clearAdvancedTimer(){
+if(window.advSessionTimer){
+clearInterval(window.advSessionTimer);
+window.advSessionTimer=null;
+}
+}
+
+})();
+</script>
+<script>
+/* =====================================================
+   GROWTH TRACKER  (calendar + speed/accuracy graph)
+===================================================== */
+(function(){
+
+const KEY = "uaGrowthHistory";
+const MONTHS = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+const MON3 = MONTHS.map(m=>m.slice(0,3));
+const DOW = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+
+function pad(n){ return String(n).padStart(2,"0"); }
+function dkey(d){ return d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate()); }
+function shortDate(k){ const p=k.split("-"); return Number(p[2])+" "+MON3[Number(p[1])-1]; }
+function longDate(k){ const p=k.split("-"); return Number(p[2])+" "+MONTHS[Number(p[1])-1]+" "+p[0]; }
+function r1(x){ return Math.round(x*10)/10; }
+
+function load(){
+  try{ const a = JSON.parse(localStorage.getItem(KEY)); return Array.isArray(a) ? a : []; }
+  catch(e){ return []; }
+}
+function save(a){ try{ localStorage.setItem(KEY, JSON.stringify(a.slice(-2000))); }catch(e){} }
+
+/* one-time import of older results so existing students don't start from zero */
+(function migrate(){
+  try{
+    if(localStorage.getItem(KEY) !== null) return;
+    const old = JSON.parse(localStorage.getItem("eliteAnalytics")) || {};
+    const out = [];
+    (old.daily || []).forEach((x,i)=>{
+      if(!x || !x.total || !x.date) return;
+      const dt = new Date(x.date);
+      if(isNaN(dt)) return;
+      dt.setHours(12,0,0,i);
+      out.push({t:dt.getTime(), d:dkey(dt), att:x.total, cor:x.score, wr:x.total-x.score, min:0, legacy:true});
+    });
+    localStorage.setItem(KEY, JSON.stringify(out));
+  }catch(e){}
+})();
+
+/* ---------- record one finished test ---------- */
+window.recordGrowth = function(){
+  if(app.recorded) return;
+  app.recorded = true;
+  const cor = app.score || 0, wr = app.wrong || 0, att = cor + wr;
+  if(att <= 0) return;
+  const now = new Date();
+  const min = Math.max((Date.now() - (app.startedAt || Date.now())) / 60000, 1/60);
+  const h = load();
+  h.push({t:now.getTime(), d:dkey(now), att:att, cor:cor, wr:wr, min:min, mode:app.mode});
+  save(h);
+};
+
+/* ---------- aggregate ---------- */
+function byDay(h){
+  const m = {};
+  h.forEach(r=>{
+    const o = m[r.d] || (m[r.d] = {d:r.d, att:0, cor:0, wr:0, tests:0, min:0, spAtt:0});
+    o.att += r.att; o.cor += r.cor; o.wr += r.wr; o.tests++;
+    if(r.min > 0){ o.min += r.min; o.spAtt += r.att; }
+  });
+  return m;
+}
+function daySpeed(o){ return o.min > 0 ? o.spAtt / o.min : null; }
+
+/* ---------- state ---------- */
+let tab = "calendar";
+let mode = "daily";
+const nowD = new Date();
+let cy = nowD.getFullYear(), cm = nowD.getMonth();
+let sel = dkey(nowD);
+
+window.openGrowth = function(t){
+  tab = t || "calendar";
+  showScreen("growthScreen");
+};
+window.setGrowthTab = function(t){ tab = t; renderGrowth(); };
+
+window.renderGrowth = function(){
+  const body = document.getElementById("growthBody");
+  if(!body) return;
+  document.getElementById("gTabCal").classList.toggle("active", tab==="calendar");
+  document.getElementById("gTabGraph").classList.toggle("active", tab==="graph");
+  if(tab === "calendar") renderCalendar(body); else renderGraph(body);
+};
+
+/* =====================  CALENDAR  ===================== */
+function renderCalendar(body){
+  const days = byDay(load());
+  const first = new Date(cy, cm, 1);
+  const total = new Date(cy, cm+1, 0).getDate();
+  const todayKey = dkey(new Date());
+  const isCurrent = (cy === nowD.getFullYear() && cm === nowD.getMonth());
+
+  let mAtt=0, mCor=0, mWr=0, active=0;
+  for(let d=1; d<=total; d++){
+    const o = days[cy+"-"+pad(cm+1)+"-"+pad(d)];
+    if(o){ mAtt+=o.att; mCor+=o.cor; mWr+=o.wr; active++; }
+  }
+  const mAcc = mAtt ? Math.round(mCor/mAtt*100) : 0;
+
+  let h = '<div class="gNav">' +
+    '<button class="gNavBtn" id="gPrev">◀</button>' +
+    '<b>' + MONTHS[cm] + ' ' + cy + '</b>' +
+    '<button class="gNavBtn" id="gNext"' + (isCurrent ? ' disabled' : '') + '>▶</button></div>';
+
+  h += '<div class="gChips">' +
+    '<span class="gChip y">Attempted: ' + mAtt + '</span>' +
+    '<span class="gChip g">Correct: ' + mCor + '</span>' +
+    '<span class="gChip r">Incorrect: ' + mWr + '</span>' +
+    '<span class="gChip">Accuracy: ' + mAcc + '%</span>' +
+    '<span class="gChip">Active days: ' + active + '</span></div>';
+
+  h += '<div class="gLegend"><span class="t">● Total attempted</span><span class="c">● Correct</span><span class="w">● Incorrect</span></div>';
+
+  h += '<div class="gcGrid">';
+  DOW.forEach(n=>{ h += '<div class="gcHead">' + n + '</div>'; });
+  for(let i=0; i<first.getDay(); i++) h += '<div class="gcDay empty"></div>';
+  for(let d=1; d<=total; d++){
+    const k = cy+"-"+pad(cm+1)+"-"+pad(d);
+    const o = days[k];
+    let cls = "gcDay", style = "", inner = '<span class="gcN">' + d + '</span>';
+    if(k === todayKey) cls += " today";
+    if(k === sel) cls += " sel";
+    if(o){
+      cls += " has";
+      const acc = o.att ? o.cor/o.att*100 : 0;
+      const tint = acc >= 80 ? "56,200,120" : (acc >= 50 ? "244,189,45" : "255,85,85");
+      style = ' style="background:rgba(' + tint + ',.13);border-color:rgba(' + tint + ',.4)"';
+      inner += '<span class="gcT">' + o.att + '</span><span class="gcC">' + o.cor + '</span><span class="gcW">' + o.wr + '</span>';
+    }
+    h += '<div class="' + cls + '" data-d="' + k + '"' + style + '>' + inner + '</div>';
+  }
+  h += '</div>';
+
+  h += '<div id="gDetail">' + detailHtml(days[sel], sel) + '</div>';
+  body.innerHTML = h;
+
+  document.getElementById("gPrev").onclick = function(){ cm--; if(cm<0){ cm=11; cy--; } renderGrowth(); };
+  document.getElementById("gNext").onclick = function(){ if(isCurrent) return; cm++; if(cm>11){ cm=0; cy++; } renderGrowth(); };
+  body.onclick = function(e){
+    const c = e.target.closest ? e.target.closest(".gcDay[data-d]") : null;
+    if(!c) return;
+    sel = c.getAttribute("data-d");
+    body.querySelectorAll(".gcDay.sel").forEach(x=>x.classList.remove("sel"));
+    c.classList.add("sel");
+    document.getElementById("gDetail").innerHTML = detailHtml(days[sel], sel);
+  };
+}
+
+function detailHtml(o, k){
+  if(!o){
+    return '<div class="gDetail"><h4>' + longDate(k) + '</h4><div class="gMuted">No tests on this day. Tap a highlighted date to see its details.</div></div>';
+  }
+  const acc = o.att ? Math.round(o.cor/o.att*100) : 0;
+  const sp = daySpeed(o);
+  return '<div class="gDetail"><h4>' + longDate(k) + '</h4>' +
+    '<div class="gStat3">' +
+    '<div class="t">Attempted<b>' + o.att + '</b></div>' +
+    '<div class="c">Correct<b>' + o.cor + '</b></div>' +
+    '<div class="w">Incorrect<b>' + o.wr + '</b></div></div>' +
+    '<div class="gMuted">Accuracy <b>' + acc + '%</b> · Tests taken <b>' + o.tests + '</b> · Speed <b>' +
+    (sp === null ? '—' : r1(sp) + ' Q/min') + '</b></div></div>';
+}
+
+/* =====================  GRAPH  ===================== */
+function points(){
+  const h = load();
+  let pts;
+  if(mode === "daily"){
+    const m = byDay(h);
+    pts = Object.keys(m).sort().map(k=>{
+      const o = m[k];
+      return {label:shortDate(k), acc:o.att ? o.cor/o.att*100 : 0, sp:daySpeed(o), att:o.att, sub:o.tests + (o.tests===1?" test":" tests")};
+    });
+  }else{
+    pts = h.slice().sort((a,b)=>a.t-b.t).map(r=>({
+      label:shortDate(r.d), acc:r.att ? r.cor/r.att*100 : 0, sp:r.min>0 ? r.att/r.min : null, att:r.att, sub:"single test"
+    }));
+  }
+  return pts.slice(-30);
+}
+
+function renderGraph(body){
+  const pts = points();
+  let h = '<div class="gSeg">' +
+    '<button id="gmDaily" class="' + (mode==="daily"?"active":"") + '">Daily</button>' +
+    '<button id="gmTest" class="' + (mode==="test"?"active":"") + '">Per Test</button></div>';
+
+  if(pts.length === 0){
+    h += '<div class="gEmpty">No data yet. Finish a test and your speed &amp; accuracy graph will appear here.</div>';
+    body.innerHTML = h;
+    wireSeg();
+    return;
+  }
+
+  const n = pts.length;
+  const W=360, H=230, L=34, R=34, T=14, B=36;
+  const pw = W-L-R, ph = H-T-B;
+  const spVals = pts.map(p=>p.sp).filter(v=>v!==null);
+  let nice = 10;
+  if(spVals.length){
+    const mx = Math.max.apply(null, spVals) * 1.15;
+    nice = Math.max(4, Math.ceil(mx/4)*4);
+  }
+  const X = i => n===1 ? L+pw/2 : L + pw*i/(n-1);
+  const YA = v => T + ph*(1 - v/100);
+  const YS = v => T + ph*(1 - v/nice);
+
+  let svg = '<svg class="gSvg" viewBox="0 0 '+W+' '+H+'" xmlns="http://www.w3.org/2000/svg">';
+  [0,.25,.5,.75,1].forEach(f=>{
+    const y = T + ph*(1-f);
+    svg += '<line x1="'+L+'" x2="'+(W-R)+'" y1="'+y+'" y2="'+y+'" stroke="rgba(255,255,255,.10)" stroke-width="1"/>';
+    svg += '<text x="'+(L-5)+'" y="'+(y+3)+'" font-size="9" fill="#f4bd2d" text-anchor="end">'+Math.round(f*100)+'</text>';
+    svg += '<text x="'+(W-R+5)+'" y="'+(y+3)+'" font-size="9" fill="#5ad1ff" text-anchor="start">'+r1(nice*f)+'</text>';
+  });
+  svg += '<text x="'+L+'" y="9" font-size="9" fill="#f4bd2d" text-anchor="middle">Acc %</text>';
+  svg += '<text x="'+(W-R)+'" y="9" font-size="9" fill="#5ad1ff" text-anchor="middle">Q/min</text>';
+
+  const step = Math.ceil(n/6);
+  pts.forEach((p,i)=>{
+    if(i%step===0 || (i===n-1 && (n-1)%step >= Math.ceil(step/2))){
+      svg += '<text x="'+X(i)+'" y="'+(H-14)+'" font-size="9" fill="#d0c8b4" text-anchor="middle">'+p.label+'</text>';
+    }
+  });
+
+  function path(getter, yfn){
+    let d = "", pen = false;
+    pts.forEach((p,i)=>{
+      const v = getter(p);
+      if(v === null){ pen = false; return; }
+      d += (pen ? "L" : "M") + r1(X(i)) + " " + r1(yfn(v)) + " ";
+      pen = true;
+    });
+    return d;
+  }
+  svg += '<path d="'+path(p=>p.acc, YA)+'" fill="none" stroke="#f4bd2d" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/>';
+  svg += '<path d="'+path(p=>p.sp, YS)+'" fill="none" stroke="#5ad1ff" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/>';
+
+  pts.forEach((p,i)=>{
+    svg += '<circle cx="'+X(i)+'" cy="'+YA(p.acc)+'" r="3" fill="#f4bd2d"/>';
+    if(p.sp !== null) svg += '<circle cx="'+X(i)+'" cy="'+YS(p.sp)+'" r="3" fill="#5ad1ff"/>';
+    svg += '<rect data-gi="'+i+'" x="'+(X(i)-Math.max(6,pw/n/2))+'" y="'+T+'" width="'+Math.max(12,pw/n)+'" height="'+ph+'" fill="transparent" style="cursor:pointer"/>';
+  });
+  svg += '</svg>';
+
+  const f = pts[0], l = pts[n-1];
+  function chg(a,b,unit,dec){
+    if(a===null || b===null) return "—";
+    const d = b-a, s = d>=0 ? "▲ " : "▼ ";
+    return (dec?r1(a):Math.round(a)) + " → " + (dec?r1(b):Math.round(b)) + unit + " (" + s + (dec?r1(Math.abs(d)):Math.round(Math.abs(d))) + ")";
+  }
+  const spF = pts.find(p=>p.sp!==null), spL = pts.slice().reverse().find(p=>p.sp!==null);
+
+  h += '<div class="gChips">' +
+    '<span class="gChip y">Accuracy: ' + chg(f.acc, l.acc, "%", false) + '</span>' +
+    '<span class="gChip" style="color:#5ad1ff">Speed: ' + (spF && spL ? chg(spF.sp, spL.sp, " Q/min", true) : "—") + '</span></div>';
+  h += '<div class="gLegend"><span class="t">● Accuracy (%)</span><span style="color:#5ad1ff">● Speed (questions / min)</span></div>';
+  h += svg;
+  h += '<div class="gReadout" id="gReadout"></div>';
+  if(n === 1) h += '<div class="gMuted">Take a few more tests to see the growth line.</div>';
+
+  body.innerHTML = h;
+  wireSeg();
+
+  function show(i){
+    const p = pts[i];
+    document.getElementById("gReadout").innerHTML =
+      '<b>' + p.label + '</b> (' + p.sub + ') · Accuracy <b>' + Math.round(p.acc) + '%</b> · Speed <b>' +
+      (p.sp===null ? '—' : r1(p.sp) + ' Q/min') + '</b> · ' + p.att + ' questions';
+  }
+  show(n-1);
+  body.onclick = function(e){
+    const t = e.target.closest ? e.target.closest("[data-gi]") : null;
+    if(t) show(Number(t.getAttribute("data-gi")));
+  };
+}
+
+function wireSeg(){
+  const a = document.getElementById("gmDaily"), b = document.getElementById("gmTest");
+  if(a) a.onclick = function(){ mode="daily"; renderGrowth(); };
+  if(b) b.onclick = function(){ mode="test"; renderGrowth(); };
+}
+
+})();
+</script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script>
+/* =====================================================
+   CLOUD: Google sign-in + online progress + shared leaderboard
+   (Firebase free "Spark" plan)
+===================================================== */
+(function(){
+
+/* ================================================================
+   STEP 1 — PASTE YOUR FIREBASE CONFIG BELOW
+   (Firebase Console → Project settings → Your apps → Web app)
+
+   STEP 2 — FIRESTORE RULES (Firestore → Rules tab → paste → Publish):
+
+   rules_version = '2';
+   service cloud.firestore {
+     match /databases/{database}/documents {
+       function signedIn(){ return request.auth != null; }
+       function owner(uid){ return request.auth != null && request.auth.uid == uid; }
+       function okName(d){ return d.name is string && d.name.size() >= 1 && d.name.size() <= 24; }
+       match /users/{uid} {
+         allow read: if signedIn();
+         allow create, update: if owner(uid) && okName(request.resource.data)
+           && request.resource.data.xp is number
+           && request.resource.data.xp >= 0 && request.resource.data.xp <= 1000000;
+       }
+       match /weekly/{wk}/entries/{uid} {
+         allow read: if signedIn();
+         allow create, update: if owner(uid) && okName(request.resource.data)
+           && request.resource.data.xp is number
+           && request.resource.data.xp >= 0 && request.resource.data.xp <= 50000;
+       }
+       match /private/{uid} {
+         allow read, write: if owner(uid);
+       }
+     }
+   }
+================================================================ */
+const FIREBASE_CONFIG = {
+  apiKey: "PASTE_YOUR_API_KEY",
+  authDomain: "PASTE_YOUR_PROJECT_ID.firebaseapp.com",
+  projectId: "PASTE_YOUR_PROJECT_ID",
+  storageBucket: "PASTE_YOUR_PROJECT_ID.appspot.com",
+  messagingSenderId: "PASTE_YOUR_SENDER_ID",
+  appId: "PASTE_YOUR_APP_ID"
+};
+/* true  = students MUST sign in with Google.
+   false = students may also continue as guest (no cloud save / leaderboard). */
+const REQUIRE_LOGIN = false;
+const TOP_N = 25;           // rows shown on the leaderboard
+const MAX_HIST = 1500;      // tests kept per student in the cloud
+
+/* ---------- helpers ---------- */
+function el(id){ return document.getElementById(id); }
+function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
+function pad(n){ return String(n).padStart(2,"0"); }
+function dkey(d){ return d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate()); }
+function weekStart(d){
+  const x = new Date(d.getFullYear(), d.getMonth(), d.getDate());
+  x.setDate(x.getDate() - ((x.getDay()+6)%7));   // Monday
+  return x;
+}
+function weekKey(){ return dkey(weekStart(new Date())); }
+const MON3 = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+function weekLabel(){
+  const s = weekStart(new Date()), e = new Date(s); e.setDate(s.getDate()+6);
+  return s.getDate()+" "+MON3[s.getMonth()]+" – "+e.getDate()+" "+MON3[e.getMonth()];
+}
+function clean(o){ return JSON.parse(JSON.stringify(o)); }
+function loadHist(){ try{ const a=JSON.parse(localStorage.getItem("uaGrowthHistory")); return Array.isArray(a)?a:[]; }catch(e){ return []; } }
+function saveHist(a){ try{ localStorage.setItem("uaGrowthHistory", JSON.stringify(a)); }catch(e){} }
+
+/* ---------- state ---------- */
+const configured = FIREBASE_CONFIG.apiKey && !/^PASTE/.test(FIREBASE_CONFIG.apiKey) &&
+                   FIREBASE_CONFIG.projectId && !/^PASTE/.test(FIREBASE_CONFIG.projectId);
+let enabled=false, auth=null, db=null, user=null;
+let authReady=false, introDone=false, guest=false;
+let P=null;                    // mirror of cloud-only bookkeeping (nick, lastXp, week)
+let lastSig="", inFlight=false, again=false, syncTimer=null, syncErr="";
+let boardTab="week", cache={};
+
+try{ guest = localStorage.getItem("uaGuest")==="1"; }catch(e){}
+
+if(configured && typeof firebase!=="undefined"){
+  try{
+    firebase.initializeApp(FIREBASE_CONFIG);
+    auth = firebase.auth();
+    db = firebase.firestore();
+    enabled = true;
+  }catch(e){ console.warn("Firebase init failed", e); }
+}
+
+/* ---------- local <-> cloud merge ---------- */
+function readLocal(){
+  return {
+    unlock: app.unlock||1, xp: app.xp||0, StreaX: app.StreaX||0,
+    doneDays: (app.doneDays||[]).slice(),
+    hist: loadHist(),
+    weak: Object.assign({}, window.__uaWeak||{})
+  };
+}
+function mergeHist(a,b){
+  const m = new Map();
+  (a||[]).concat(b||[]).forEach(r=>{
+    if(!r || !r.t) return;
+    const k = r.t+"_"+r.att;
+    if(!m.has(k)) m.set(k, r);
+  });
+  return Array.from(m.values()).sort((x,y)=>x.t-y.t).slice(-MAX_HIST);
+}
+function mergeAll(l,c){
+  if(!c) return l;
+  const weak = Object.assign({}, l.weak);
+  Object.keys(c.weak||{}).forEach(k=>{ weak[k] = Math.max(weak[k]||0, c.weak[k]||0); });
+  const days = Array.from(new Set((l.doneDays||[]).concat(c.doneDays||[]))).sort((a,b)=>a-b);
+  return {
+    unlock: Math.max(l.unlock, c.unlock||1),
+    xp: Math.max(l.xp, c.xp||0),
+    StreaX: Math.max(l.StreaX, c.StreaX||0),
+    doneDays: days,
+    hist: mergeHist(l.hist, c.hist),
+    weak: weak
+  };
+}
+function applyMerged(m){
+  app.unlock = m.unlock; app.xp = m.xp; app.StreaX = m.StreaX; app.doneDays = m.doneDays;
+  try{ safeSave(); }catch(e){}
+  saveHist(m.hist);
+  const W = window.__uaWeak;
+  if(W){
+    Object.keys(m.weak).forEach(k=>{ W[k] = m.weak[k]; });
+    try{ localStorage.setItem("weakTopicsData", JSON.stringify(W)); }catch(e){}
+  }
+  const U = window.__uaUltra;
+  if(U){
+    let best=0, solved=0;
+    m.hist.forEach(r=>{ if(r.att){ best=Math.max(best, Math.round(r.cor/r.att*100)); solved+=r.att; } });
+    U.bestAcc = Math.max(U.bestAcc||0, best);
+    U.totalSolved = Math.max(U.totalSolved||0, solved);
+    U.sessions = Math.max(U.sessions||0, m.hist.length);
+    try{ localStorage.setItem("ultraStats", JSON.stringify(U)); }catch(e){}
+    if(el("bestAcc")) el("bestAcc").textContent = U.bestAcc+"%";
+    if(el("totalSolved")) el("totalSolved").textContent = U.totalSolved;
+  }
+  try{ updateHeader(); }catch(e){}
+  try{ renderDays(); }catch(e){}
+}
+
+function defaultNick(u){
+  const base = (u.displayName || (u.email||"").split("@")[0] || "Student").trim().split(/\s+/)[0];
+  return (base || "Student").slice(0,20);
+}
+
+/* ---------- load on sign-in ---------- */
+async function loadAndMerge(){
+  const snap = await db.collection("private").doc(user.uid).get();
+  const cloud = snap.exists ? snap.data() : null;
+  const merged = mergeAll(readLocal(), cloud);
+  applyMerged(merged);
+  P = {
+    nick: (cloud && cloud.nick) ? cloud.nick : defaultNick(user),
+    lastXp: (cloud && typeof cloud.lastXp==="number") ? cloud.lastXp : merged.xp,
+    week: (cloud && cloud.week) ? cloud.week : null
+  };
+  lastSig = "";
+  await doSync(true);
+}
+
+/* ---------- write to cloud ---------- */
+function scheduleSync(ms){
+  if(!enabled || !user) return;
+  clearTimeout(syncTimer);
+  syncTimer = setTimeout(()=>doSync(false), ms||0);
+}
+async function doSync(force){
+  if(!enabled || !user || !P) return;
+  if(inFlight){ again = true; return; }
+  inFlight = true;
+  try{
+    const hist = loadHist().slice(-MAX_HIST);
+    const xp = app.xp||0;
+    const wk = weekKey();
+    let nextWeek = (P.week && P.week.k===wk) ? {k:wk, xp:P.week.xp||0} : {k:wk, xp:0};
+    nextWeek.xp += Math.max(0, xp - (P.lastXp||0));
+
+    let att=0, cor=0, wAtt=0, wCor=0;
+    const ws = weekStart(new Date()).getTime();
+    hist.forEach(r=>{
+      att += r.att||0; cor += r.cor||0;
+      if(r.t >= ws){ wAtt += r.att||0; wCor += r.cor||0; }
+    });
+
+    const priv = clean({
+      v:1, unlock:app.unlock, xp:xp, StreaX:app.StreaX, doneDays:app.doneDays||[],
+      hist:hist, weak:(window.__uaWeak||{}), lastXp:xp, week:nextWeek, nick:P.nick
+    });
+    const sig = JSON.stringify(priv);
+    if(force || sig!==lastSig){
+      const ts = firebase.firestore.FieldValue.serverTimestamp();
+      const batch = db.batch();
+      batch.set(db.collection("private").doc(user.uid), Object.assign({}, priv, {updatedAt:ts}));
+      batch.set(db.collection("users").doc(user.uid), {
+        name:P.nick, xp:xp, att:att, cor:cor, StreaX:app.StreaX||0,
+        rank:(typeof rankName==="function" ? rankName(xp) : ""), updatedAt:ts
+      });
+      if(nextWeek.xp>0 || wAtt>0){
+        batch.set(db.collection("weekly").doc(wk).collection("entries").doc(user.uid), {
+          name:P.nick, xp:nextWeek.xp, att:wAtt, cor:wCor, updatedAt:ts
+        });
+      }
+      await batch.commit();
+      P.week = nextWeek; P.lastXp = xp; lastSig = sig; cache = {};
+    }
+    syncErr = "";
+  }catch(e){
+    console.warn("Cloud sync failed", e);
+    syncErr = (e && e.code==="permission-denied") ? "Permission denied — check Firestore rules." : "Offline — will retry.";
+  }
+  inFlight = false;
+  renderStatus();
+  if(again){ again = false; scheduleSync(1500); }
+}
+
+/* ---------- sign in / out ---------- */
+function gateMsg(t){ const m=el("agMsg"); if(m) m.textContent = t||""; }
+async function signIn(){
+  if(!enabled){ gateMsg("Cloud features are not set up yet."); return; }
+  gateMsg("Opening Google sign-in…");
+  try{
+    const p = new firebase.auth.GoogleAuthProvider();
+    p.setCustomParameters({prompt:"select_account"});
+    await auth.signInWithPopup(p);
+    try{ localStorage.removeItem("uaGuest"); }catch(e){}
+    guest = false;
+    gateMsg("");
+  }catch(e){
+    const c = e && e.code;
+    if(c==="auth/popup-closed-by-user" || c==="auth/cancelled-popup-request") gateMsg("Sign-in was cancelled. Please try again.");
+    else if(c==="auth/popup-blocked" || c==="auth/operation-not-supported-in-this-environment")
+      gateMsg("Google sign-in cannot open here. Please open this link in Chrome or Safari (not inside Telegram/WhatsApp).");
+    else if(c==="auth/unauthorized-domain")
+      gateMsg("This website address is not authorised in Firebase (Authentication → Settings → Authorized domains).");
+    else gateMsg("Sign-in failed: " + ((e && e.message) || "unknown error"));
+  }
+}
+function wipeLocal(){
+  ["calcRushData","uaGrowthHistory","weakTopicsData","ultraStats","eliteAnalytics","eliteProfile"].forEach(k=>{
+    try{ localStorage.removeItem(k); }catch(e){}
+  });
+}
+async function signOut(){
+  if(!enabled || !user) return;
+  if(!confirm("Sign out? Your progress is saved online and will come back when you sign in again.")) return;
+  try{ clearTimeout(syncTimer); await doSync(true); }catch(e){}
+  try{ await auth.signOut(); }catch(e){}
+  wipeLocal();                         // so the next student on this device starts clean
+  location.reload();
+}
+function playGuest(){
+  guest = true;
+  try{ localStorage.setItem("uaGuest","1"); }catch(e){}
+  hideGate();
+  renderStatus();
+}
+
+/* ---------- sign-in gate ---------- */
+function showGate(){
+  if(el("authGate")) return;
+  const g = document.createElement("div");
+  g.id = "authGate";
+  g.innerHTML =
+    '<div class="agBox">' +
+    '<h2>ULTIMA ACADEMY</h2>' +
+    '<p>Sign in with Google to save your progress online (even if you clear your browser) and compete on the leaderboard.</p>' +
+    '<button class="agGoogle" id="agGo"><b>G</b> Continue with Google</button>' +
+    (REQUIRE_LOGIN ? '' : '<button class="agGuest" id="agGuest">Play as guest</button>') +
+    '<div class="agMsg" id="agMsg"></div></div>';
+  document.body.appendChild(g);
+  el("agGo").onclick = signIn;
+  if(el("agGuest")) el("agGuest").onclick = playGuest;
+}
+function hideGate(){ const g = el("authGate"); if(g) g.remove(); }
+function maybeShowGate(){
+  if(!enabled || !authReady || !introDone || user) return;
+  if(guest && !REQUIRE_LOGIN) return;
+  showGate();
+}
+
+/* ---------- account / status ---------- */
+function renderStatus(){
+  const s = el("cloudStatus");
+  if(!s) return;
+  if(!enabled) s.innerHTML = "☁️ Online features are not set up yet.";
+  else if(user) s.innerHTML = "☁️ Saved online as <b>" + esc(P ? P.nick : defaultNick(user)) + "</b>" + (syncErr ? " · <span style='color:#ffd45c'>" + esc(syncErr) + "</span>" : "");
+  else s.innerHTML = "☁️ Not signed in. Progress is saved only on this device.";
+}
+function accountHtml(){
+  if(!enabled){
+    return '<h2>☁️ Cloud Save</h2><p style="margin-top:10px;color:#d0c8b4">Online save and leaderboard are not set up yet.</p>';
+  }
+  if(!user){
+    return '<h2>☁️ Cloud Save</h2>' +
+      '<p style="margin-top:10px;color:#d0c8b4">Sign in with Google to keep your progress forever and join the leaderboard.</p>' +
+      '<button class="agGoogle" onclick="UACloud.signIn()"><b>G</b> Continue with Google</button>' +
+      '<div class="agMsg" id="agMsg"></div>';
+  }
+  return '<h2>☁️ Cloud Save</h2>' +
+    '<p style="margin-top:8px;color:#d0c8b4;font-size:13px">Signed in as ' + esc(user.email||"") + '</p>' +
+    '<div class="uaSect"><b>Leaderboard name</b>' +
+    '<input class="uaInput" id="uaNick" maxlength="20" value="' + esc(P ? P.nick : "") + '" placeholder="Nickname (max 20)">' +
+    '<p style="margin-top:6px;color:#d0c8b4;font-size:12px">Only this name is shown to other students. Your email is never shown.</p>' +
+    '<button class="btn" onclick="UACloud.saveNick()">Save name</button></div>' +
+    '<div class="uaSect"><button class="btn secondary" onclick="UACloud.signOut()">Sign out</button></div>';
+}
+function openAccount(){ if(typeof openModal==="function") openModal(accountHtml()); }
+function saveNick(){
+  const v = (el("uaNick") ? el("uaNick").value : "").trim().replace(/\s+/g," ").slice(0,20);
+  if(!v || !P) return;
+  P.nick = v;
+  lastSig = ""; cache = {};
+  scheduleSync(0);
+  renderStatus();
+  if(typeof openModal==="function") openModal(accountHtml() + '<p style="margin-top:10px;color:#74f0a9;font-weight:700">✅ Name saved</p>');
+}
+
+/* extend the existing Profile popup with the account section */
+if(typeof window.openProfile==="function"){
+  const oldProfile = window.openProfile;
+  window.openProfile = function(){
+    oldProfile();
+    try{
+      if(enabled){
+        const c = el("modalContent");
+        if(c) c.insertAdjacentHTML("beforeend", '<div class="uaSect">' + accountHtml() + '</div>');
+      }
+    }catch(e){}
+  };
+}
+
+/* ---------- leaderboard ---------- */
+async function loadBoard(tab, force){
+  const c = cache[tab];
+  if(!force && c && Date.now()-c.t < 60000) return c.rows;
+  let q;
+  if(tab==="week") q = db.collection("weekly").doc(weekKey()).collection("entries").orderBy("xp","desc").limit(TOP_N);
+  else q = db.collection("users").orderBy("xp","desc").limit(TOP_N);
+  const s = await q.get();
+  const rows = s.docs.map(d=>Object.assign({id:d.id}, d.data()));
+  cache[tab] = {t:Date.now(), rows:rows};
+  return rows;
+}
+async function renderBoard(force){
+  const body = el("boardBody");
+  if(!body) return;
+  el("lbTabWeek").classList.toggle("active", boardTab==="week");
+  el("lbTabAll").classList.toggle("active", boardTab==="all");
+
+  if(!enabled){
+    body.innerHTML = '<div class="gEmpty">The leaderboard is not set up yet. (Teacher: add your Firebase config in the file.)</div>';
+    return;
+  }
+  if(!user){
+    body.innerHTML = '<div class="gEmpty">Sign in with Google to see the leaderboard and compete with other students.' +
+      '<button class="btn" onclick="UACloud.signIn()">Sign in with Google</button><div class="agMsg" id="agMsg"></div></div>';
+    return;
+  }
+  const want = boardTab;
+  body.innerHTML = '<div class="gEmpty">Loading…</div>';
+  try{
+    const rows = await loadBoard(want, force);
+    if(want !== boardTab) return;
+    let h = '<div class="lbHead">' + (want==="week" ? "This week · " + weekLabel() : "All-time ranking") + ' · ranked by XP</div>';
+    if(!rows.length){
+      h += '<div class="gEmpty">No one has scored yet. Be the first! 🚀</div>';
+    }else{
+      let meIn = false;
+      rows.forEach((r,i)=>{
+        const me = r.id === user.uid; if(me) meIn = true;
+        const medal = i===0 ? "🥇" : i===1 ? "🥈" : i===2 ? "🥉" : String(i+1);
+        const acc = r.att ? Math.round((r.cor||0)/r.att*100) : 0;
+        h += '<div class="lbRow' + (me?' me':'') + '">' +
+          '<div class="lbRank">' + medal + '</div>' +
+          '<div class="lbMid"><div class="lbName">' + esc(r.name||"Student") + (me?' (you)':'') + '</div>' +
+          '<div class="lbSub">' + acc + '% accuracy · ' + (r.att||0) + ' questions</div></div>' +
+          '<div class="lbXp">' + (r.xp||0) + ' XP</div></div>';
+      });
+      if(!meIn) h += '<div class="lbNote">You are not in the top ' + TOP_N + ' yet. Keep practicing! 💪</div>';
+    }
+    body.innerHTML = h;
+  }catch(e){
+    console.warn(e);
+    body.innerHTML = '<div class="gEmpty">Could not load the leaderboard' +
+      ((e && e.code==="permission-denied") ? ' (permission denied — check the Firestore rules).' : '. Check your internet and tap Refresh.') + '</div>';
+  }
+}
+function openBoard(tab){
+  if(tab) boardTab = tab;
+  showScreen("boardScreen");
+  if(user) scheduleSync(0);
+  renderBoard(false);
+}
+function refreshBoard(){ cache = {}; renderBoard(true); }
+
+/* ---------- auth listener ---------- */
+async function onAuth(u){
+  authReady = true;
+  user = u;
+  if(u){
+    hideGate();
+    try{ await loadAndMerge(); }
+    catch(e){
+      console.warn("Cloud load failed", e);
+      syncErr = (e && e.code==="permission-denied") ? "Permission denied — check Firestore rules." : "Could not reach the server.";
+      if(!P) P = {nick:defaultNick(u), lastXp:app.xp||0, week:null};
+    }
+    try{ UASound.enter(); }catch(e){}
+    const m = el("proModal");
+    if(m && m.style.display==="block") openAccount();
+    if(el("boardScreen") && el("boardScreen").classList.contains("active")) renderBoard(true);
+  }else{
+    P = null;
+    maybeShowGate();
+  }
+  renderStatus();
+}
+if(enabled) auth.onAuthStateChanged(onAuth); else authReady = true;
+
+document.addEventListener("visibilitychange", function(){
+  if(document.visibilityState==="hidden") scheduleSync(0);
+});
+
+renderStatus();
+
+window.UACloud = {
+  enabled:function(){ return enabled; },
+  afterIntro:function(){ introDone = true; maybeShowGate(); },
+  scheduleSync:scheduleSync,
+  signIn:signIn, signOut:signOut,
+  openBoard:openBoard, refreshBoard:refreshBoard,
+  openAccount:openAccount, saveNick:saveNick
+};
+
+})();
+
+</script>
+</body>
+</html>
